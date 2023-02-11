@@ -1,23 +1,23 @@
-Cython==0.29.21
-librosa==0.8.0
-matplotlib==3.3.1
-numpy==1.21.6
-scipy==1.5.2
-tensorboard==2.3.0
+Cython
+librosa
+numpy
+scipy
+tensorboard
 torch --extra-index-url https://download.pytorch.org/whl/cu116
 torchvision --extra-index-url https://download.pytorch.org/whl/cu116
 torchaudio --extra-index-url https://download.pytorch.org/whl/cu116
-unidecode==1.3.4
-pyopenjtalk==0.2.0
-jamo==0.4.1
-pypinyin==0.44.0
-jieba==0.42.1
-protobuf==3.19.0
-cn2an==0.5.17
-inflect==6.0.0
-eng_to_ipa==0.0.2
-ko_pron==1.3
+unidecode
+pyopenjtalk
+jamo
+pypinyin
+jieba
+protobuf
+cn2an
+inflect
+eng_to_ipa
+ko_pron
 indic_transliteration==2.3.37
 num_thai==0.0.5
 opencc==1.1.1
+demucs
 gradio
