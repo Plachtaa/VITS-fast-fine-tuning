@@ -17,9 +17,12 @@ if __name__ == "__main__":
     duplicate = num_old_voices // num_user_voices // 3
     # find corresponding existing annotation lines
     actual_user_annos = ["./user_voice/" + line for line in user_annos if line.split("|")[0] in wavfiles]
-    actual_user_annos *= duplicate
-    final_annos = old_annos + actual_user_annos
+    final_annos = old_annos + actual_user_annos * duplicate
     # save annotation file
-    with open("final_annotation.txt", 'w', encoding='utf-8') as f:
+    with open("final_annotation_train.txt", 'w', encoding='utf-8') as f:
         for line in final_annos:
+            f.write(line)
+    # save annotation file for validation
+    with open("final_annotation_val.txt", 'w', encoding='utf-8') as f:
+        for line in actual_user_annos:
             f.write(line)
