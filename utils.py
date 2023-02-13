@@ -30,7 +30,12 @@ def load_checkpoint(checkpoint_path, model, optimizer=None):
     new_state_dict = {}
     for k, v in state_dict.items():
         try:
-            new_state_dict[k] = saved_state_dict[k]
+            if k == 'emb_g.weight':
+                v[:saved_state_dict[k].shape[0], :] = saved_state_dict[k]
+                # v[999, :] = saved_state_dict[k][154, :]
+                new_state_dict[k] = v
+            else:
+                new_state_dict[k] = saved_state_dict[k]
         except:
             logger.info("%s is not in the checkpoint" % k)
             new_state_dict[k] = v
@@ -52,7 +57,7 @@ def save_checkpoint(model, optimizer, learning_rate, iteration, checkpoint_path)
         state_dict = model.state_dict()
     torch.save({'model': state_dict,
                 'iteration': iteration,
-                'optimizer': optimizer.state_dict(),
+                'optimizer': optimizer.state_dict() if optimizer is not None else None,
                 'learning_rate': learning_rate}, checkpoint_path)
 
 
@@ -145,11 +150,11 @@ def get_hparams(init=True):
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--config', type=str, default="./configs/finetune_speaker.json",
                         help='JSON file for configuration')
-    parser.add_argument('-m', '--model', type=str, default="./OUTPUT_MODEL",
+    parser.add_argument('-m', '--model', type=str, default="pretrained_models",
                         help='Model name')
 
     args = parser.parse_args()
-    model_dir = args.model
+    model_dir = os.path.join("./", args.model)
 
     if not os.path.exists(model_dir):
         os.makedirs(model_dir)
