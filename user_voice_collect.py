@@ -2,6 +2,7 @@ import numpy as np
 import torch
 import torchaudio
 import gradio as gr
+import os
 
 anno_lines = []
 with open("./user_voice/user_voice.txt", 'r', encoding='utf-8') as f:
