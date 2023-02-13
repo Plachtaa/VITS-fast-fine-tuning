@@ -143,13 +143,13 @@ def load_filepaths_and_text(filename, split="|"):
 
 def get_hparams(init=True):
     parser = argparse.ArgumentParser()
-    parser.add_argument('-c', '--config', type=str, default="./configs/uma87.json",
+    parser.add_argument('-c', '--config', type=str, default="./configs/finetune_speaker.json",
                         help='JSON file for configuration')
-    parser.add_argument('-m', '--model', type=str, default="./pretrained_models/uma_G_0.pth",
+    parser.add_argument('-m', '--model', type=str, default="./OUTPUT_MODEL",
                         help='Model name')
 
     args = parser.parse_args()
-    model_dir = os.path.join("../drive/MyDrive", args.model)
+    model_dir = args.model
 
     if not os.path.exists(model_dir):
         os.makedirs(model_dir)
