@@ -17,8 +17,8 @@
     "c_kl": 1.0
   },
   "data": {
-    "training_files":"final_annotation.txt",
-    "validation_files":"final_annotation.txt",
+    "training_files":"final_annotation_train.txt",
+    "validation_files":"final_annotation_val.txt",
     "text_cleaners":["cjke_cleaners2"],
     "max_wav_value": 32768.0,
     "sampling_rate": 22050,
