@@ -152,7 +152,7 @@ def get_hparams(init=True):
                         help='JSON file for configuration')
     parser.add_argument('-m', '--model', type=str, default="pretrained_models",
                         help='Model name')
-    parser.add_argument('-n', '--n_steps', type=str, default="2000",
+    parser.add_argument('-n', '--n_steps', type=int, default="2000",
                         help='finetune steps')
 
     args = parser.parse_args()
@@ -175,6 +175,7 @@ def get_hparams(init=True):
 
     hparams = HParams(**config)
     hparams.model_dir = model_dir
+    hparams.n_steps = args.n_steps
     return hparams
 
 
