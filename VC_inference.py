@@ -23,7 +23,7 @@ def get_text(text, hps):
     return text_norm
 
 def create_vc_fn(model, hps, speaker_ids):
-    def vc_fn(original_speaker, target_speaker, record_audio, upload_audio):
+    def vc_fn(original_speaker, target_speaker, record_audio, upload_audio, denoise):
         input_audio = record_audio if record_audio is not None else upload_audio
         if input_audio is None:
             return "You need to record or upload an audio", None
@@ -37,8 +37,17 @@ def create_vc_fn(model, hps, speaker_ids):
         if sampling_rate != hps.data.sampling_rate:
             audio = librosa.resample(audio, orig_sr=sampling_rate, target_sr=hps.data.sampling_rate)
         with no_grad():
-            y = torch.FloatTensor(audio).to(device)
+            y = torch.FloatTensor(audio)
             y = y.unsqueeze(0)
+            y = y / max(-y.min(), y.max()) / 0.99
+            if denoise:
+                torchaudio.save("infer.wav", y.cpu(), 22050, channels_first=True)
+                os.system(f"demucs --two-stems=vocals infer.wav")
+                y, sr = torchaudio.load(f"./separated/htdemucs/infer/vocals.wav", frame_offset=0, num_frames=-1, normalize=True, channels_first=True)
+                y = y.mean(dim=0).unsqueeze(0)
+                if sr != 22050:
+                    y = torchaudio.transforms.Resample(orig_freq=sr, new_freq=22050)(y)
+            y = y.to(device)
             spec = spectrogram_torch(y, hps.data.filter_length,
                                      hps.data.sampling_rate, hps.data.hop_length, hps.data.win_length,
                                      center=False).to(device)
@@ -82,10 +91,11 @@ if __name__ == "__main__":
             upload_audio = gr.Audio(label="or upload audio here", source="upload")
             source_speaker = gr.Dropdown(choices=speakers, value="User", label="source speaker")
             target_speaker = gr.Dropdown(choices=speakers, value=speakers[0], label="target speaker")
+            denoise_checkbox = gr.Checkbox(label="denoise using demucs", value=True)
         with gr.Column():
             message_box = gr.Textbox(label="Message")
             converted_audio = gr.Audio(label='converted audio')
         btn = gr.Button("Convert!")
-        btn.click(vc_fn, inputs=[source_speaker, target_speaker, record_audio, upload_audio],
+        btn.click(vc_fn, inputs=[source_speaker, target_speaker, record_audio, upload_audio, denoise_checkbox],
                   outputs=[message_box, converted_audio])
     app.launch(share=args.share)
