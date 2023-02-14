@@ -34,6 +34,6 @@ because the original VITS has some dependencies that are difficult to configure.
 2. Clone this repo:  
 `git clone https://github.com/SongtingLiu/VITS_voice_conversion.git`
 3. Install dependencies  
-`pip install -r requirements.txt`
+`pip install -r requirements_infer.txt`
 4. run VC_inference.py  
 `python VC_inference.py`
