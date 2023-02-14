@@ -14,7 +14,7 @@ from models_infer import SynthesizerTrn
 from text import text_to_sequence
 import gradio as gr
 import torchaudio
-
+device = "cuda:0" if torch.cuda.is_available() else "cpu"
 def get_text(text, hps):
     text_norm = text_to_sequence(text, hps.symbols, hps.data.text_cleaners)
     if hps.data.add_blank:
@@ -37,14 +37,14 @@ def create_vc_fn(model, hps, speaker_ids):
         if sampling_rate != hps.data.sampling_rate:
             audio = librosa.resample(audio, orig_sr=sampling_rate, target_sr=hps.data.sampling_rate)
         with no_grad():
-            y = torch.FloatTensor(audio)
+            y = torch.FloatTensor(audio).to(device)
             y = y.unsqueeze(0)
             spec = spectrogram_torch(y, hps.data.filter_length,
                                      hps.data.sampling_rate, hps.data.hop_length, hps.data.win_length,
-                                     center=False)
-            spec_lengths = LongTensor([spec.size(-1)])
-            sid_src = LongTensor([original_speaker_id])
-            sid_tgt = LongTensor([target_speaker_id])
+                                     center=False).to(device)
+            spec_lengths = LongTensor([spec.size(-1)]).to(device)
+            sid_src = LongTensor([original_speaker_id]).to(device)
+            sid_tgt = LongTensor([target_speaker_id]).to(device)
             audio = model.voice_conversion(spec, spec_lengths, sid_src=sid_src, sid_tgt=sid_tgt)[0][
                 0, 0].data.cpu().float().numpy()
         del y, spec, spec_lengths, sid_src, sid_tgt
@@ -54,11 +54,11 @@ def create_vc_fn(model, hps, speaker_ids):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_dir", default="./G_latest.pth", help="directory to your fine-tuned model")
-    parser.add_argument("--share", default=True, help="make link public (used in colab)")
+    parser.add_argument("--share", default=False, help="make link public (used in colab)")
 
     args = parser.parse_args()
     hps = utils.get_hparams_from_file("./configs/finetune_speaker.json")
-    device = "cpu"
+
 
     net_g = SynthesizerTrn(
         len(hps.symbols),
