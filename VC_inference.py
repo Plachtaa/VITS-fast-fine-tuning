@@ -54,6 +54,7 @@ def create_vc_fn(model, hps, speaker_ids):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_dir", default="./G_latest.pth", help="directory to your fine-tuned model")
+    parser.add_argument("--share", default=True, help="make link public (used in colab)")
 
     args = parser.parse_args()
     hps = utils.get_hparams_from_file("./configs/finetune_speaker.json")
@@ -87,4 +88,4 @@ if __name__ == "__main__":
         btn = gr.Button("Convert!")
         btn.click(vc_fn, inputs=[source_speaker, target_speaker, record_audio, upload_audio],
                   outputs=[message_box, converted_audio])
-    app.launch()
+    app.launch(share=args.share)
