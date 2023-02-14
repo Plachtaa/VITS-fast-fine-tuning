@@ -1,26 +1,15 @@
 import os
-import json
-import math
 import numpy as np
 import torch
 from torch import no_grad, LongTensor
 import librosa
-from torch.nn import functional as F
 import argparse
 from mel_processing import spectrogram_torch
-import commons
 import utils
 from models_infer import SynthesizerTrn
-from text import text_to_sequence
 import gradio as gr
 import torchaudio
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
-def get_text(text, hps):
-    text_norm = text_to_sequence(text, hps.symbols, hps.data.text_cleaners)
-    if hps.data.add_blank:
-        text_norm = commons.intersperse(text_norm, 0)
-    text_norm = torch.LongTensor(text_norm)
-    return text_norm
 
 def create_vc_fn(model, hps, speaker_ids):
     def vc_fn(original_speaker, target_speaker, record_audio, upload_audio, denoise):

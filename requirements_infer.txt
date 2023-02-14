@@ -1,0 +1,11 @@
+Cython
+librosa
+numpy
+scipy
+torch
+torchvision
+torchaudio
+unidecode
+protobuf
+demucs
+gradio

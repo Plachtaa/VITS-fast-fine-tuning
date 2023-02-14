@@ -6,7 +6,7 @@ Welcome to play around with the base model, a Trilingual Anime VITS!
 [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/Plachta/VITS-Umamusume-voice-synthesizer)
 
 ### Currently Supported Tasks:
-- [x] Convert user's voice to characters listed below
+- [x] Convert user's voice to characters listed [here](https://github.com/SongtingLiu/VITS_voice_conversion/blob/main/configs/finetune_speaker.json)
 - [x] Chinese, English, Japanese TTS with user's voice
 - [ ] Chinese, English, Japanese TTS with custom characters...
 
@@ -30,6 +30,10 @@ because the original VITS has some dependencies that are difficult to configure.
 
 ## Inference or Usage
 
-1. Clone this repo
-2. Install dependencies
-3. run VC_inference.py
+1. Install Python if you haven't done so (Python >= 3.7)
+2. Clone this repo:  
+`git clone https://github.com/SongtingLiu/VITS_voice_conversion.git`
+3. Install dependencies  
+`pip install -r requirements.txt`
+4. run VC_inference.py  
+`python VC_inference.py`
