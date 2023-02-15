@@ -1,4 +1,4 @@
-[中文文档请点击这里](https://github.com/SongtingLiu/VITS_voice_conversion/blob/main/README_CN.md)
+[中文文档请点击这里](https://github.com/SongtingLiu/VITS_voice_conversion/blob/main/README.md)
 # VITS Voice Conversion
 This repo will guide you to add your voice into an existing VITS TTS model
 to make it a high-quality voice converter to all existing character voices in the model.  
