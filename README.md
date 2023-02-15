@@ -1,9 +1,9 @@
 English Documentation Please Click [here](https://github.com/SongtingLiu/VITS_voice_conversion/blob/main/README_EN.md)
 # VITS 声线转换
 这个代码库会指导你如何将自己的声线通过微调加入已有的VITS模型中，从而使得一个模型就可以实现用户声线到上百个角色声线的高质量转换。  
+本项目使用的底模涵盖常见二次元男/女配音声线（来自原神数据集）以及现实世界常见男/女声线（来自VCTK数据集），支持中日英三语，保证能够在微调时快速适应新的声线。
 
-欢迎体验微调所使用的底模，一个包含中日英三语的TTS（文本到语音合成）模型！ 
-
+欢迎体验微调所使用的底模！ 
 [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/Plachta/VITS-Umamusume-voice-synthesizer)
 
 ### 目前支持的任务:
