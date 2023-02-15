@@ -29,11 +29,16 @@
 微调结束后可以直接下载微调好的模型，日后在本地运行（不需要GPU）
 
 ## 本地运行和推理
+0. 记得下载微调好的模型和config文件！
+1. 下载最新的Release包（在Github页面的右侧）
+2. 把下载的模型和config文件放在 `VC_inference`文件夹下, 确保模型的文件名为 `G_latest.pth` ，config文件名为 `finetune_speaker.json`
+3. 一切准备就绪后，文件结构应该如下所示:
+```shell
+VC_inference
+├───VC_inference.exe
+├───...
+├───finetune_speaker.json
+└───G_latest.json
+```
+4. 运行 `VC_inference.exe`, 浏览器会自动弹出窗口.
 
-1. Install Python if you haven't done so (Python >= 3.7)
-2. Clone this repo:  
-`git clone https://github.com/SongtingLiu/VITS_voice_conversion.git`
-3. Install dependencies  
-`pip install -r requirements_infer.txt`
-4. run VC_inference.py  
-`python VC_inference.py`

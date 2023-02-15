@@ -27,14 +27,19 @@ because the original VITS has some dependencies that are difficult to configure.
 ### How long does it take?
 1. Install dependencies (2 min)
 2. Record at least 10 your own voice (5 min)
-3. Fine-tune (30 min)
+3. Fine-tune (30 min)  
+After everything is done, download the fine-tuned model & model config
 
-## Inference or Usage
-
-1. Install Python if you haven't done so (Python >= 3.7)
-2. Clone this repo:  
-`git clone https://github.com/SongtingLiu/VITS_voice_conversion.git`
-3. Install dependencies  
-`pip install -r requirements_infer.txt`
-4. run VC_inference.py  
-`python VC_inference.py`
+## Inference or Usage (Currently support Windows only)
+0. Remember to download your fine-tuned model!
+1. Download the latest release
+2. Put your model & config file into the folder `VC_inference`, make sure to rename the model to `G_latest.pth` and config file to `finetune_speaker.json`
+3. The file structure should be as follows:
+```shell
+VC_inference
+├───VC_inference.exe
+├───...
+├───finetune_speaker.json
+└───G_latest.json
+```
+4. run `VC_inference.exe`, the browser should pop up automatically.
