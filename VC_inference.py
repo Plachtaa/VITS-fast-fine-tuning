@@ -2,13 +2,13 @@ import os
 import numpy as np
 import torch
 from torch import no_grad, LongTensor
-import librosa
 import argparse
 from mel_processing import spectrogram_torch
 import utils
 from models_infer import SynthesizerTrn
 import gradio as gr
 import torchaudio
+import webbrowser
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 
 def create_vc_fn(model, hps, speaker_ids):
@@ -20,14 +20,13 @@ def create_vc_fn(model, hps, speaker_ids):
         original_speaker_id = speaker_ids[original_speaker]
         target_speaker_id = speaker_ids[target_speaker]
 
-        audio = (audio / np.iinfo(audio.dtype).max).astype(np.float32)
-        if len(audio.shape) > 1:
-            audio = librosa.to_mono(audio.transpose(1, 0))
+        audio = torch.tensor(audio).type(torch.float32)
+        audio = audio.squeeze().unsqueeze(0)
+        audio = audio / max(-audio.min(), audio.max()) / 0.99
         if sampling_rate != hps.data.sampling_rate:
-            audio = librosa.resample(audio, orig_sr=sampling_rate, target_sr=hps.data.sampling_rate)
+            audio = torchaudio.transforms.Resample(orig_freq=sampling_rate, new_freq=22050)(audio)
         with no_grad():
             y = torch.FloatTensor(audio)
-            y = y.unsqueeze(0)
             y = y / max(-y.min(), y.max()) / 0.99
             if denoise:
                 torchaudio.save("infer.wav", y.cpu(), 22050, channels_first=True)
@@ -52,10 +51,11 @@ def create_vc_fn(model, hps, speaker_ids):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_dir", default="./G_latest.pth", help="directory to your fine-tuned model")
+    parser.add_argument("--config_dir", default="./finetune_speaker.json", help="directory to your model config file")
     parser.add_argument("--share", default=False, help="make link public (used in colab)")
 
     args = parser.parse_args()
-    hps = utils.get_hparams_from_file("./configs/finetune_speaker.json")
+    hps = utils.get_hparams_from_file(args.config_dir)
 
 
     net_g = SynthesizerTrn(
@@ -80,11 +80,13 @@ if __name__ == "__main__":
             upload_audio = gr.Audio(label="or upload audio here", source="upload")
             source_speaker = gr.Dropdown(choices=speakers, value="User", label="source speaker")
             target_speaker = gr.Dropdown(choices=speakers, value=speakers[0], label="target speaker")
-            denoise_checkbox = gr.Checkbox(label="denoise using demucs", value=True)
+            denoise_checkbox = gr.Checkbox(label="denoise using demucs", value=False)
         with gr.Column():
             message_box = gr.Textbox(label="Message")
             converted_audio = gr.Audio(label='converted audio')
         btn = gr.Button("Convert!")
         btn.click(vc_fn, inputs=[source_speaker, target_speaker, record_audio, upload_audio, denoise_checkbox],
                   outputs=[message_box, converted_audio])
+    webbrowser.open("http://127.0.0.1:7860")
     app.launch(share=args.share)
+

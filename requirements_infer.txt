@@ -3,7 +3,6 @@ librosa
 numpy
 scipy
 torch
-torchvision
 torchaudio
 unidecode
 protobuf
