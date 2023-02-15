@@ -3,11 +3,11 @@ import numpy as np
 import torch
 from torch import no_grad, LongTensor
 import argparse
-from models_infer import spectrogram_torch
+from mel_processing import spectrogram_torch
 import utils
 from models_infer import SynthesizerTrn
 import gradio as gr
-import torchaudio
+import librosa
 import webbrowser
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 
@@ -20,15 +20,16 @@ def create_vc_fn(model, hps, speaker_ids):
         original_speaker_id = speaker_ids[original_speaker]
         target_speaker_id = speaker_ids[target_speaker]
 
-        audio = torch.tensor(audio).type(torch.float32)
-        audio = audio.squeeze().unsqueeze(0)
-        audio = audio / max(-audio.min(), audio.max()) / 0.99
+        audio = (audio / np.iinfo(audio.dtype).max).astype(np.float32)
+        if len(audio.shape) > 1:
+            audio = librosa.to_mono(audio.transpose(1, 0))
         if sampling_rate != hps.data.sampling_rate:
-            audio = torchaudio.transforms.Resample(orig_freq=sampling_rate, new_freq=22050)(audio)
+            audio = librosa.resample(audio, orig_sr=sampling_rate, target_sr=hps.data.sampling_rate)
         with no_grad():
             y = torch.FloatTensor(audio)
             y = y / max(-y.min(), y.max()) / 0.99
             y = y.to(device)
+            y = y.unsqueeze(0)
             spec = spectrogram_torch(y, hps.data.filter_length,
                                      hps.data.sampling_rate, hps.data.hop_length, hps.data.win_length,
                                      center=False).to(device)
