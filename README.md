@@ -1,40 +1,38 @@
-[中文文档请点击这里](https://github.com/SongtingLiu/VITS_voice_conversion/blob/main/README_CN.md)
-# VITS Voice Conversion
-This repo will guide you to add your voice into an existing VITS TTS model
-to make it a high-quality voice converter to all existing character voices in the model.  
+# VITS 声线转换
+这个代码库会指导你如何将自己的声线通过微调加入已有的VITS模型中，从而使得一个模型就可以实现用户声线到上百个角色声线的高质量转换。  
 
-Welcome to play around with the base model, a Trilingual Anime VITS!
+欢迎体验微调所使用的底模，一个包含中日英三语的TTS（文本到语音合成）模型！ 
+
 [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/Plachta/VITS-Umamusume-voice-synthesizer)
 
-### Currently Supported Tasks:
-- [x] Convert user's voice to characters listed [here](https://github.com/SongtingLiu/VITS_voice_conversion/blob/main/configs/finetune_speaker.json)
-- [x] Chinese, English, Japanese TTS with user's voice
-- [ ] Chinese, English, Japanese TTS with custom characters...
+### 目前支持的任务:
+- [x] 转换用户声线到 [这些角色](https://github.com/SongtingLiu/VITS_voice_conversion/blob/main/configs/finetune_speaker.json)
+- [ ] 自定义角色的中日英三语TTS（待完成）
 
-### Currently Supported Characters for TTS & VC:
-- [x] Umamusume Pretty Derby
-- [x] Sanoba Witch
-- [x] Genshin Impact
-- [ ] Custom characters...
-
+### 目前支持声线转换和中日英三语TTS的角色
+- [x] 赛马娘 （仅已实装角色）
+- [x] 魔女的夜宴（柚子社） （5人）
+- [x] 原神 （仅已实装角色）
+- [ ] 任意角色（待完成）
 
 
 
-## Fine-tuning
-It's recommended to perform fine-tuning on [Google Colab](https://colab.research.google.com/drive/1omMhfYKrAAQ7a6zOCsyqpla-wU-QyfZn?usp=sharing)
-because the original VITS has some dependencies that are difficult to configure.
 
-### How long does it take?
-1. Install dependencies (2 min)
-2. Record at least 10 your own voice (5 min)
-3. Fine-tune (30 min)  
-After everything is done, download the fine-tuned model & model config
+## 微调
+建议使用 [Google Colab](https://colab.research.google.com/drive/1omMhfYKrAAQ7a6zOCsyqpla-wU-QyfZn?usp=sharing)
+进行微调任务，因为VITS在多语言情况下的某些环境依赖相当难以配置。
+### 在Google Colab里，我需要花多长时间？
+1. 安装依赖 (2 min)
+2. 录入你自己的声音，至少20条3~4秒的短句 (5 min)
+3. 进行微调 (30 min)  
 
-## Inference or Usage (Currently support Windows only)
-0. Remember to download your fine-tuned model!
-1. Download the latest release
-2. Put your model & config file into the folder `VC_inference`, make sure to rename the model to `G_latest.pth` and config file to `finetune_speaker.json`
-3. The file structure should be as follows:
+微调结束后可以直接下载微调好的模型，日后在本地运行（不需要GPU）
+
+## 本地运行和推理
+0. 记得下载微调好的模型和config文件！
+1. 下载最新的Release包（在Github页面的右侧）
+2. 把下载的模型和config文件放在 `VC_inference`文件夹下, 确保模型的文件名为 `G_latest.pth` ，config文件名为 `finetune_speaker.json`
+3. 一切准备就绪后，文件结构应该如下所示:
 ```shell
 VC_inference
 ├───VC_inference.exe
@@ -42,4 +40,5 @@ VC_inference
 ├───finetune_speaker.json
 └───G_latest.json
 ```
-4. run `VC_inference.exe`, the browser should pop up automatically.
+4. 运行 `VC_inference.exe`, 浏览器会自动弹出窗口.
+
