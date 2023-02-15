@@ -3,7 +3,7 @@ import numpy as np
 import torch
 from torch import no_grad, LongTensor
 import argparse
-from mel_processing import spectrogram_torch
+from models_infer import spectrogram_torch
 import utils
 from models_infer import SynthesizerTrn
 import gradio as gr

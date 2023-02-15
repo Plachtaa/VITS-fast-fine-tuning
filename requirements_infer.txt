@@ -1,5 +1,4 @@
 Cython
-librosa
 numpy
 scipy
 torch
