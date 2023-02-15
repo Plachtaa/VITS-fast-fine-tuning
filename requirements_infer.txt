@@ -4,6 +4,4 @@ scipy
 torch
 torchaudio
 unidecode
-protobuf
-demucs
 gradio
