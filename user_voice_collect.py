@@ -15,19 +15,19 @@ def display_text(index):
     index = int(index)
     global text_index
     text_index = index
-    return f"{text_index}: " + anno_lines[index].split("|")[2].strip("[ZH]")
+    return f"{text_index}: " + anno_lines[index].split("|")[2].strip("[ZH]").strip("[EN]")
 
 def display_prev_text():
     global text_index
     if text_index != 0:
         text_index -= 1
-    return f"{text_index}: " + anno_lines[text_index].split("|")[2].strip("[ZH]")
+    return f"{text_index}: " + anno_lines[text_index].split("|")[2].strip("[ZH]").strip("[EN]")
 
 def display_next_text():
     global text_index
     if text_index != len(anno_lines)-1:
         text_index += 1
-    return f"{text_index}: " + anno_lines[text_index].split("|")[2].strip("[ZH]")
+    return f"{text_index}: " + anno_lines[text_index].split("|")[2].strip("[ZH]").strip("[EN]")
 
 def save_audio(audio):
     global text_index
