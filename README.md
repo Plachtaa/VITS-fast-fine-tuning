@@ -9,13 +9,13 @@ Welcome to play around with the base model, a Trilingual Anime VITS!
 ### Currently Supported Tasks:
 - [x] Convert user's voice to characters listed [here](https://github.com/SongtingLiu/VITS_voice_conversion/blob/main/configs/finetune_speaker.json)
 - [x] Chinese, English, Japanese TTS with user's voice
-- [ ] Chinese, English, Japanese TTS with custom characters...
+- [x] Chinese, English, Japanese TTS with custom characters!
 
 ### Currently Supported Characters for TTS & VC:
-- [x] Umamusume Pretty Derby
-- [x] Sanoba Witch
-- [x] Genshin Impact
-- [ ] Custom characters...
+- [x] Umamusume Pretty Derby (Used as base model pretraining)
+- [x] Sanoba Witch (Used as base model pretraining)
+- [x] Genshin Impact (Used as base model pretraining)
+- [x] Any character you wish as long as you have their voices!
 
 
 
@@ -24,22 +24,46 @@ Welcome to play around with the base model, a Trilingual Anime VITS!
 It's recommended to perform fine-tuning on [Google Colab](https://colab.research.google.com/drive/1omMhfYKrAAQ7a6zOCsyqpla-wU-QyfZn?usp=sharing)
 because the original VITS has some dependencies that are difficult to configure.
 
-### How long does it take?
+### How long does it take? 
 1. Install dependencies (2 min)
-2. Record at least 10 your own voice (5 min)
-3. Fine-tune (30 min)  
+2. Record at least 20 your own voice (5~10 min)
+3. Upload your character voices, which should be a `.zip` file,
+it's file structure should be like:
+```
+Your-zip-file.zip
+├───Character_name_1
+├   ├───xxx.wav
+├   ├───...
+├   ├───yyy.mp3
+├   └───zzz.wav
+├───Character_name_2
+├   ├───xxx.wav
+├   ├───...
+├   ├───yyy.mp3
+├   └───zzz.wav
+├───...
+├
+└───Character_name_n
+    ├───xxx.wav
+    ├───...
+    ├───yyy.mp3
+    └───zzz.wav
+```
+Note that the format & name of the audio files does not matter as long as they are audio files.  
+You can either choose to perform step 2, 3, or both, depending on your needs.
+4. Fine-tune (30 min)  
 After everything is done, download the fine-tuned model & model config
 
 ## Inference or Usage (Currently support Windows only)
 0. Remember to download your fine-tuned model!
 1. Download the latest release
-2. Put your model & config file into the folder `VC_inference`, make sure to rename the model to `G_latest.pth` and config file to `finetune_speaker.json`
+2. Put your model & config file into the folder `inference`, make sure to rename the model to `G_latest.pth` and config file to `finetune_speaker.json`
 3. The file structure should be as follows:
 ```shell
-VC_inference
-├───VC_inference.exe
+inference
+├───inference.exe
 ├───...
 ├───finetune_speaker.json
 └───G_latest.json
 ```
-4. run `VC_inference.exe`, the browser should pop up automatically.
+4. run `inference.exe`, the browser should pop up automatically.
