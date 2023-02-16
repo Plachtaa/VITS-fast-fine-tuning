@@ -148,12 +148,12 @@ def load_filepaths_and_text(filename, split="|"):
 
 def get_hparams(init=True):
     parser = argparse.ArgumentParser()
-    parser.add_argument('-c', '--config', type=str, default="./configs/finetune_speaker.json",
+    parser.add_argument('-c', '--config', type=str, default="./configs/modified_finetune_speaker.json",
                         help='JSON file for configuration')
     parser.add_argument('-m', '--model', type=str, default="pretrained_models",
                         help='Model name')
-    parser.add_argument('-n', '--n_steps', type=int, default="2000",
-                        help='finetune steps')
+    parser.add_argument('-n', '--max_epochs', type=int, default="50",
+                        help='finetune epochs')
 
     args = parser.parse_args()
     model_dir = os.path.join("./", args.model)
@@ -175,7 +175,7 @@ def get_hparams(init=True):
 
     hparams = HParams(**config)
     hparams.model_dir = model_dir
-    hparams.n_steps = args.n_steps
+    hparams.max_epochs = args.max_epochs
     return hparams
 
 
