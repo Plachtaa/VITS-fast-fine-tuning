@@ -1,7 +1,11 @@
 [中文文档请点击这里](https://github.com/SongtingLiu/VITS_voice_conversion/blob/main/README_ZH.md)
-# VITS Voice Conversion
-This repo will guide you to add your voice into an existing VITS TTS model
-to make it a high-quality voice converter to all existing character voices in the model.  
+# VITS Fast Fine-tuning
+This repo will guide you to add your own character voices, or even your own voice, into an existing VITS TTS model
+to make it able to do the following tasks in less than 1 hour:  
+
+1. Any-to-any voice conversion between you & any characters you added & preset characters
+2. English, Japanese & Chinese Text-to-Speech synthesis with the characters you added & preset characters  
+  
 
 Welcome to play around with the base model, a Trilingual Anime VITS!
 [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/Plachta/VITS-Umamusume-voice-synthesizer)
