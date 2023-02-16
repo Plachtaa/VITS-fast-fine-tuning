@@ -3,7 +3,6 @@ librosa
 numpy
 scipy
 tensorboard
-git+https://github.com/openai/whisper.git -q
 unidecode
 pyopenjtalk
 jamo
