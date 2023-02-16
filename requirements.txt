@@ -3,9 +3,7 @@ librosa
 numpy
 scipy
 tensorboard
-torch --extra-index-url https://download.pytorch.org/whl/cu116
-torchvision --extra-index-url https://download.pytorch.org/whl/cu116
-torchaudio --extra-index-url https://download.pytorch.org/whl/cu116
+git+https://github.com/openai/whisper.git -q
 unidecode
 pyopenjtalk
 jamo
@@ -20,5 +18,4 @@ indic_transliteration==2.3.37
 num_thai==0.0.5
 opencc==1.1.1
 demucs
-openai-whisper
 gradio
