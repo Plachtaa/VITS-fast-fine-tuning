@@ -81,7 +81,7 @@ if __name__ == "__main__":
     with open("./configs/finetune_speaker.json", 'r', encoding='utf-8') as f:
         hps = json.load(f)
     # modify n_speakers
-    hps['data']["n_speakers"] = 999 + len(speaker2id)
+    hps['data']["n_speakers"] = 1000 + len(speaker2id)
     # add speaker names
     for speaker in speaker_names:
         hps['speakers'][speaker] = speaker2id[speaker]

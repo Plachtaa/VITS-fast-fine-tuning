@@ -152,7 +152,7 @@ def get_hparams(init=True):
                         help='JSON file for configuration')
     parser.add_argument('-m', '--model', type=str, default="pretrained_models",
                         help='Model name')
-    parser.add_argument('-n', '--max_epochs', type=int, default="50",
+    parser.add_argument('-n', '--max_epochs', type=int, default=50,
                         help='finetune epochs')
 
     args = parser.parse_args()
