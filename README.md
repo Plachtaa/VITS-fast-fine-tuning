@@ -26,7 +26,7 @@ because the original VITS has some dependencies that are difficult to configure.
 
 ### How long does it take? 
 1. Install dependencies (2 min)
-2. Record at least 20 your own voice (5~10 min)
+2. Record at least 20 your own voice, the content to read will be presented in UI, less than 20 words per sentence. (5~10 min)
 3. Upload your character voices, which should be a `.zip` file,
 it's file structure should be like:
 ```

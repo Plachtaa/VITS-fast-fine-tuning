@@ -24,7 +24,7 @@ English Documentation Please Click [here](https://github.com/SongtingLiu/VITS_vo
 进行微调任务，因为VITS在多语言情况下的某些环境依赖相当难以配置。
 ### 在Google Colab里，我需要花多长时间？
 1. 安装依赖 (2 min)
-2. 录入你自己的声音，至少20条3~4秒的短句 (5~10 min)
+2. 录入你自己的声音，阅读内容会在UI中提供，每句不超过20个字。 (5~10 min)
 3. 上传你希望加入的其它角色声音，用一个`.zip`文件打包
 文件结构应该如下所示:
 ```
