@@ -37,5 +37,6 @@ if __name__ == "__main__":
     with open("final_annotation_val.txt", 'w', encoding='utf-8') as f:
         for line in actual_user_annos:
             f.write(line)
-        for line in custom_character_anno:
-            f.write(line)
+        if os.path.exists("custom_character_anno.txt"):
+            for line in custom_character_anno:
+                f.write(line)
