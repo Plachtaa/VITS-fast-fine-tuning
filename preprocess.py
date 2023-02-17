@@ -25,10 +25,11 @@ if __name__ == "__main__":
     if os.path.exists("custom_character_anno.txt"):
         with open("custom_character_anno.txt", 'r', encoding='utf-8') as f:
             custom_character_anno = f.readlines()
-        # custom character voices need to be at least equal to number of sample_audio4ft
-        num_character_voices = len(custom_character_anno)
-        cc_duplicate = num_old_voices // num_character_voices
-        final_annos = final_annos + custom_character_anno * cc_duplicate
+        if len(custom_character_anno):
+            # custom character voices need to be at least equal to number of sample_audio4ft
+            num_character_voices = len(custom_character_anno)
+            cc_duplicate = num_old_voices // num_character_voices
+            final_annos = final_annos + custom_character_anno * cc_duplicate
     # save annotation file
     with open("final_annotation_train.txt", 'w', encoding='utf-8') as f:
         for line in final_annos:
