@@ -1,4 +1,4 @@
-[中文文档请点击这里](https://github.com/Plachtaa/VITS-fast-fine-tuning/blob/WebUI/README_CN.md)
+[中文文档请点击这里](https://github.com/Plachtaa/VITS-fast-fine-tuning/blob/main/README_CN.md)
 # VITS Fast Fine-tuning
 This repo will guide you to add your own character voices, or even your own voice, into an existing VITS TTS model
 to make it able to do the following tasks in less than 1 hour:  

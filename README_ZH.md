@@ -1,4 +1,4 @@
-English Documentation Please Click [here](https://github.com/Plachtaa/VITS-fast-fine-tuning/blob/WebUI/README_EN.md)
+English Documentation Please Click [here](https://github.com/Plachtaa/VITS-fast-fine-tuning/blob/main/README_EN.md)
 # VITS 快速微调
 这个代码库会指导你如何将自定义角色，甚至你自己的声线加入一个现有的VITS模型中，在1小时内的微调使模型具备如下功能：  
 1. 在 你 & 你加入的角色 & 预设角色 之间进行任意声线转换
