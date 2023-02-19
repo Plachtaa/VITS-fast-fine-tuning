@@ -71,6 +71,6 @@ inference
 ├───inference.exe
 ├───...
 ├───finetune_speaker.json
-└───G_latest.json
+└───G_latest.pth
 ```
 4. run `inference.exe`, the browser should pop up automatically.
