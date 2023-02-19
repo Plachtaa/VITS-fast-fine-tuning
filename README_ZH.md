@@ -69,7 +69,7 @@ inference
 ├───inference.exe
 ├───...
 ├───finetune_speaker.json
-└───G_latest.json
+└───G_latest.pth
 ```
 4. 运行 `inference.exe`, 浏览器会自动弹出窗口.
 
