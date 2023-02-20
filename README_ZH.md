@@ -71,5 +71,5 @@ inference
 ├───finetune_speaker.json
 └───G_latest.pth
 ```
-4. 运行 `inference.exe`, 浏览器会自动弹出窗口.
+4. 运行 `inference.exe`, 浏览器会自动弹出窗口, 注意其所在路径不能有中文字符或者空格.
 
