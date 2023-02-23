@@ -1,15 +1,13 @@
 import whisper
 import os
 import torchaudio
-
+import json
+import text
 lang2token = {
     'zh': "[ZH]",
     'ja': "[JA]",
     "en": "[EN]",
 }
-
-# pyopenjtalk warmup
-# text._clean_text("これは困りますね", ["cjke_cleaners2"])
 
 
 def transcribe_one(audio_path):
@@ -63,22 +61,23 @@ if __name__ == "__main__":
                 speaker_annos.append(save_path + "|" + str(speaker2id[speaker]) + "|" + text)
             except:
                 continue
-    import text
+
     # clean annotation
+    cleaned_speaker_annos = []
     for i, line in enumerate(speaker_annos):
         path, sid, txt = line.split("|")
+        if len(txt) > 100:
+            continue
         cleaned_text = text._clean_text(txt, ["cjke_cleaners2"])
         cleaned_text += "\n" if not cleaned_text.endswith("\n") else ""
-        speaker_annos[i] = path + "|" + sid + "|" + cleaned_text
-    # write into annotation
+        cleaned_speaker_annos.append(path + "|" + sid + "|" + cleaned_text)
     with open("custom_character_anno.txt", 'w', encoding='utf-8') as f:
-        for line in speaker_annos:
+        for line in cleaned_speaker_annos:
             f.write(line)
-
-    import json
     # generate new config
     with open("./configs/finetune_speaker.json", 'r', encoding='utf-8') as f:
         hps = json.load(f)
+
     # modify n_speakers
     hps['data']["n_speakers"] = 1000 + len(speaker2id)
     # add speaker names
