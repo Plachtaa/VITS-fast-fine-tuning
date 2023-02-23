@@ -1,7 +1,7 @@
 import whisper
 import os
 import torchaudio
-
+import text
 lang2token = {
     'zh': "[ZH]",
     'ja': "[JA]",
@@ -63,9 +63,6 @@ if __name__ == "__main__":
                 continue
 
     # clean annotation
-    import argparse
-    import text
-    from utils import load_filepaths_and_text
     for i, line in enumerate(speaker_annos):
         path, sid, txt = line.split("|")
         cleaned_text = text._clean_text(txt, ["cjke_cleaners2"])
