@@ -1,7 +1,7 @@
 import whisper
 import os
 import torchaudio
-import text
+
 lang2token = {
     'zh': "[ZH]",
     'ja': "[JA]",
@@ -9,7 +9,7 @@ lang2token = {
 }
 
 # pyopenjtalk warmup
- # text._clean_text("これは困りますね", ["cjke_cleaners2"])
+# text._clean_text("これは困りますね", ["cjke_cleaners2"])
 
 
 def transcribe_one(audio_path):
@@ -32,6 +32,7 @@ def transcribe_one(audio_path):
     print(result.text)
     return lang, result.text
 if __name__ == "__main__":
+
     model = whisper.load_model("medium")
     parent_dir = "./custom_character_voice/"
     speaker_names = list(os.walk(parent_dir))[0][1]
@@ -62,7 +63,7 @@ if __name__ == "__main__":
                 speaker_annos.append(save_path + "|" + str(speaker2id[speaker]) + "|" + text)
             except:
                 continue
-
+    import text
     # clean annotation
     for i, line in enumerate(speaker_annos):
         path, sid, txt = line.split("|")
