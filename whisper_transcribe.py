@@ -8,7 +8,8 @@ lang2token = {
     "en": "[EN]",
 }
 
-
+# pyopenjtalk warmup
+text._clean_text("これは困りますね", ["cjke_cleaners2"])
 
 
 def transcribe_one(audio_path):
