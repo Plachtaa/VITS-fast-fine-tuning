@@ -2,7 +2,7 @@ import whisper
 import os
 import torchaudio
 import json
-import text
+
 lang2token = {
     'zh': "[ZH]",
     'ja': "[JA]",
@@ -63,6 +63,7 @@ if __name__ == "__main__":
                 continue
 
     # clean annotation
+    import text
     cleaned_speaker_annos = []
     for i, line in enumerate(speaker_annos):
         path, sid, txt = line.split("|")
