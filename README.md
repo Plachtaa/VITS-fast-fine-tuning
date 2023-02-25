@@ -54,7 +54,7 @@ Your-zip-file.zip
     └───zzz.wav
 ```
 Note that the format & name of the audio files does not matter as long as they are audio files.  
-Audio quality requirements: >=2s, <=20s per audio, background noise should be as less as possible.
+Audio quality requirements: >=2s, <=10s per audio, background noise should be as less as possible.
 Audio quantity requirements: at least 10 per character, better if 20+ per character.   
 You can either choose to perform step 2, 3, or both, depending on your needs.  
 
