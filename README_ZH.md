@@ -61,7 +61,7 @@ Your-zip-file.zip
 
 ## 本地运行和推理
 0. 记得下载微调好的模型和config文件！
-1. 下载最新的Release包（在Github页面的右侧）
+1. 下载最新的[Release包](https://github.com/Plachtaa/VITS-fast-fine-tuning/releases/tag/WebUI)
 2. 把下载的模型和config文件放在 `inference`文件夹下, 确保模型的文件名为 `G_latest.pth` ，config文件名为 `finetune_speaker.json`
 3. 一切准备就绪后，文件结构应该如下所示:
 ```shell
