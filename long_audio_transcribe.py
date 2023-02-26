@@ -10,6 +10,7 @@ filelist = list(os.walk(parent_dir))[0][2]
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--languages", default="CJE")
+    parser.add_argument("--whisper_size", default="medium")
     args = parser.parse_args()
     if args.languages == "CJE":
         lang2token = {
@@ -22,7 +23,7 @@ if __name__ == "__main__":
             'zh': "[ZH]",
             'ja': "[JA]",
         }
-    model = whisper.load_model("large")
+    model = whisper.load_model(args.whisper_size)
     speaker_annos = []
     for file in filelist:
         print(f"transcribing {parent_dir + file}...\n")
