@@ -8,9 +8,9 @@ English Documentation Please Click [here](https://github.com/Plachtaa/VITS-fast-
 
 欢迎体验微调所使用的底模！  
 
-中日英：[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/Plachta/VITS-Umamusume-voice-synthesizer)  
+中日英：[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/Plachta/VITS-Umamusume-voice-synthesizer) 作者：我  
 
-中日：[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/sayashi/vits-uma-genshin-honkai)
+中日：[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/sayashi/vits-uma-genshin-honkai) 作者：[SayaSS](https://github.com/SayaSS) 
 
 ### 目前支持的任务:
 - [x] 从 10条以上的短音频 克隆角色声音
