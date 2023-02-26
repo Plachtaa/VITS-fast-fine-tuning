@@ -1,0 +1,61 @@
+from moviepy.editor import AudioFileClip
+import whisper
+import os
+import torchaudio
+import librosa
+import torch
+import argparse
+parent_dir = "./denoised_audio/"
+filelist = list(os.walk(parent_dir))[0][2]
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--languages", default="CJE")
+    args = parser.parse_args()
+    if args.languages == "CJE":
+        lang2token = {
+            'zh': "[ZH]",
+            'ja': "[JA]",
+            "en": "[EN]",
+        }
+    elif args.languages == "CJ":
+        lang2token = {
+            'zh': "[ZH]",
+            'ja': "[JA]",
+        }
+    model = whisper.load_model("large")
+    speaker_annos = []
+    for file in filelist:
+        print(f"transcribing {parent_dir + file}...\n")
+        options = dict(beam_size=5, best_of=5)
+        transcribe_options = dict(task="transcribe", **options)
+        result = model.transcribe(parent_dir + file, **transcribe_options)
+        segments = result["segments"]
+        # result = model.transcribe(parent_dir + file)
+        lang = result['language']
+        if result['language'] not in list(lang2token.keys()):
+            print(f"{lang} not supported, ignoring...\n")
+        # segment audio based on segment results
+        character_name = file.rstrip(".wav").split("_")[0]
+        code = file.rstrip(".wav").split("_")[1]
+        if not os.path.exists("./segmented_character_voice/" + character_name):
+            os.mkdir("./segmented_character_voice/" + character_name)
+        wav, sr = torchaudio.load(parent_dir + file, frame_offset=0, num_frames=-1, normalize=True,
+                                  channels_first=True)
+
+        for i, seg in enumerate(result['segments']):
+            start_time = seg['start']
+            end_time = seg['end']
+            text = seg['text']
+            text = lang2token[lang] + text.replace("\n", "") + lang2token[lang]
+            text = text + "\n"
+            wav_seg = wav[:, int(start_time*sr):int(end_time*sr)]
+            wav_seg_name = f"{character_name}_{code}_{i}.wav"
+            savepth = "./segmented_character_voice/" + character_name + "/" + wav_seg_name
+            speaker_annos.append(savepth + "|" + character_name + "|" + text)
+            # trimmed_wav_seg = librosa.effects.trim(wav_seg.squeeze().numpy())
+            # trimmed_wav_seg = torch.tensor(trimmed_wav_seg[0]).unsqueeze(0)
+            torchaudio.save(savepth, wav_seg, 22050, channels_first=True)
+
+    with open("long_character_anno.txt", 'w', encoding='utf-8') as f:
+        for line in speaker_annos:
+            f.write(line)

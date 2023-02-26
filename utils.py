@@ -15,7 +15,7 @@ logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logger = logging
 
 
-def load_checkpoint(checkpoint_path, model, optimizer=None):
+def load_checkpoint(checkpoint_path, model, optimizer=None, drop_speaker_emb=False):
     assert os.path.isfile(checkpoint_path)
     checkpoint_dict = torch.load(checkpoint_path, map_location='cpu')
     iteration = checkpoint_dict['iteration']
@@ -31,8 +31,10 @@ def load_checkpoint(checkpoint_path, model, optimizer=None):
     for k, v in state_dict.items():
         try:
             if k == 'emb_g.weight':
+                if drop_speaker_emb:
+                    new_state_dict[k] = v
+                    continue
                 v[:saved_state_dict[k].shape[0], :] = saved_state_dict[k]
-                # v[999, :] = saved_state_dict[k][154, :]
                 new_state_dict[k] = v
             else:
                 new_state_dict[k] = saved_state_dict[k]
@@ -154,6 +156,7 @@ def get_hparams(init=True):
                         help='Model name')
     parser.add_argument('-n', '--max_epochs', type=int, default=50,
                         help='finetune epochs')
+    parser.add_argument('--drop_speaker_embed', type=bool, default=False, help='whether to drop existing characters')
 
     args = parser.parse_args()
     model_dir = os.path.join("./", args.model)
@@ -176,6 +179,7 @@ def get_hparams(init=True):
     hparams = HParams(**config)
     hparams.model_dir = model_dir
     hparams.max_epochs = args.max_epochs
+    hparams.drop_speaker_embed = args.drop_speaker_embed
     return hparams
 
 
