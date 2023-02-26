@@ -14,9 +14,9 @@ English Documentation Please Click [here](https://github.com/Plachtaa/VITS-fast-
 
 ### 目前支持的任务:
 - [x] 从 10条以上的短音频 克隆角色声音
-- [x] 从 3分钟以上的长音频 克隆角色声音
-- [x] 从 3分钟以上的视频（只包含单说话人） 克隆角色声音
-- [x] 通过输入 bilibili视频链接（只包含单说话人） 克隆角色声音
+- [x] 从 3分钟以上的长音频（单个音频只能包含单说话人） 克隆角色声音
+- [x] 从 3分钟以上的视频（单个视频只能包含单说话人） 克隆角色声音
+- [x] 通过输入 bilibili视频链接（单个视频只能包含单说话人） 克隆角色声音
 
 ### 目前支持声线转换和中日英三语TTS的角色
 - [x] 赛马娘 （仅已实装角色）（预训练时使用的角色）
@@ -32,7 +32,7 @@ English Documentation Please Click [here](https://github.com/Plachtaa/VITS-fast-
 进行微调任务，因为VITS在多语言情况下的某些环境依赖相当难以配置。
 ### 在Google Colab里，我需要花多长时间？
 1. 安装依赖 (3 min)
-2. 选择预训练模型，详细区别参见Colab笔记本页面。
+2. 选择预训练模型，详细区别参见[Colab 笔记本页面](https://colab.research.google.com/drive/1pn1xnFfdLK63gVXDwV4zCXfVeo8c-I-0?usp=sharing)。
 3. 上传你希望加入的其它角色声音，详细上传方式见[DATA.MD](https://github.com/Plachtaa/VITS-fast-fine-tuning/blob/main/DATA.MD)
 4. 进行微调，根据选择的微调方式和样本数量不同，花费时长可能在20分钟到2小时不等。
 
@@ -41,7 +41,7 @@ English Documentation Please Click [here](https://github.com/Plachtaa/VITS-fast-
 ## 本地运行和推理
 0. 记得下载微调好的模型和config文件！
 1. 下载最新的Release包（在Github页面的右侧）
-2. 把下载的模型和config文件放在 `inference`文件夹下, 确保模型的文件名为 `G_latest.pth` ，config文件名为 `finetune_speaker.json`
+2. 把下载的模型和config文件放在 `inference`文件夹下, 其文件名分别为 `G_latest.pth` 和 `finetune_speaker.json`。
 3. 一切准备就绪后，文件结构应该如下所示:
 ```
 inference
