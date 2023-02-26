@@ -26,7 +26,6 @@ Your-zip-file.zip
 数量要求：一个角色至少10条，最好每个角色20条以上。  
 2. 以角色名命名的长音频文件，音频内只能有单说话人，背景音会被自动去除。命名格式为：`{CharacterName}_{random_number}.wav`  
 (例如：`Diana_234135.wav`, `MinatoAqua_234252.wav`)，必须是`.wav`文件。  
-  
 
 3. 以角色名命名的长视频文件，视频内只能有单说话人，背景音会被自动去除。命名格式为：`{CharacterName}_{random_number}.mp4`  
 (例如：`Taffy_332452.mp4`, `Dingzhen_957315.mp4`)，必须是`.mp4`文件。  
