@@ -23,7 +23,11 @@ if __name__ == "__main__":
         model_sd['model']['emb_g.weight'] = new_emb_g
         with open("./finetune_speaker.json", 'w', encoding='utf-8') as f:
             json.dump(hps, f, indent=2)
-        torch.save("./G_latest.pth", args.model_dir)
+        torch.save(model_sd, "./G_latest.pth")
+    else:
+        with open("./finetune_speaker.json", 'w', encoding='utf-8') as f:
+            json.dump(hps, f, indent=2)
+        torch.save(model_sd, "./G_latest.pth")
     # save another config file copy in MoeGoe format
     hps['speakers'] = valid_speakers
     with open("./moegoe_config.json", 'w', encoding='utf-8') as f:
