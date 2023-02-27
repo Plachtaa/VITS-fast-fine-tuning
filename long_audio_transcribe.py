@@ -35,6 +35,7 @@ if __name__ == "__main__":
         lang = result['language']
         if result['language'] not in list(lang2token.keys()):
             print(f"{lang} not supported, ignoring...\n")
+            continue
         # segment audio based on segment results
         character_name = file.rstrip(".wav").split("_")[0]
         code = file.rstrip(".wav").split("_")[1]

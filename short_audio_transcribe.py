@@ -67,6 +67,7 @@ if __name__ == "__main__":
                 lang, text = transcribe_one(save_path)
                 if lang not in list(lang2token.keys()):
                     print(f"{lang} not supported, ignoring\n")
+                    continue
                 text = lang2token[lang] + text + lang2token[lang] + "\n"
                 speaker_annos.append(save_path + "|" + speaker + "|" + text)
             except:
