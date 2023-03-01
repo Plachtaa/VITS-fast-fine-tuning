@@ -23,6 +23,10 @@ if __name__ == "__main__":
             'zh': "[ZH]",
             'ja': "[JA]",
         }
+    elif args.languages == "C":
+        lang2token = {
+            'zh': "[ZH]",
+        }
     model = whisper.load_model(args.whisper_size)
     speaker_annos = []
     for file in filelist:

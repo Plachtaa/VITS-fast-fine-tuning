@@ -43,6 +43,10 @@ if __name__ == "__main__":
             'zh': "[ZH]",
             'ja': "[JA]",
         }
+    elif args.languages == "C":
+        lang2token = {
+            'zh': "[ZH]",
+        }
     model = whisper.load_model(args.whisper_size)
     parent_dir = "./custom_character_voice/"
     speaker_names = list(os.walk(parent_dir))[0][1]
