@@ -111,7 +111,7 @@ if __name__ == "__main__":
             path, speaker, txt = line.split("|")
             if len(txt) > 150:
                 continue
-            cleaned_text = text._clean_text(txt, hps['data']['text_cleaners'])
+            cleaned_text = text._clean_text(txt, hps['data']['text_cleaners']).replace("[ZH]", "")
             cleaned_text += "\n" if not cleaned_text.endswith("\n") else ""
             cleaned_new_annos.append(path + "|" + str(speaker2id[speaker]) + "|" + cleaned_text)
 

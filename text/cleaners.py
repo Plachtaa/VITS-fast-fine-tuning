@@ -39,7 +39,7 @@ def korean_cleaners(text):
 
 def chinese_cleaners(text):
     from pypinyin import Style, pinyin
-
+    text = text.replace("[ZH]", "")
     phones = [phone[0] for phone in pinyin(text, style=Style.TONE3)]
     return ' '.join(phones)
 
