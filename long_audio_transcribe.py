@@ -61,7 +61,9 @@ if __name__ == "__main__":
             # trimmed_wav_seg = librosa.effects.trim(wav_seg.squeeze().numpy())
             # trimmed_wav_seg = torch.tensor(trimmed_wav_seg[0]).unsqueeze(0)
             torchaudio.save(savepth, wav_seg, 22050, channels_first=True)
-
+    if len(speaker_annos) == 0:
+        print("Warning: no long audios & videos found, this IS expected if you have only uploaded short audios")
+        print("this IS NOT expected if you have uploaded any long audios, videos or video links. Please check your file structure or make sure your audio/video language is supported.")
     with open("long_character_anno.txt", 'w', encoding='utf-8') as f:
         for line in speaker_annos:
             f.write(line)

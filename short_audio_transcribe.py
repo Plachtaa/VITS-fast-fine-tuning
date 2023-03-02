@@ -87,6 +87,9 @@ if __name__ == "__main__":
     #     cleaned_text += "\n" if not cleaned_text.endswith("\n") else ""
     #     speaker_annos[i] = path + "|" + sid + "|" + cleaned_text
     # write into annotation
+    if len(speaker_annos) == 0:
+        print("Warning: no short audios found, this IS expected if you have only uploaded long audios, videos or video links.")
+        print("this IS NOT expected if you have uploaded a zip file of short audios. Please check your file structure or make sure your audio language is supported.")
     with open("short_character_anno.txt", 'w', encoding='utf-8') as f:
         for line in speaker_annos:
             f.write(line)

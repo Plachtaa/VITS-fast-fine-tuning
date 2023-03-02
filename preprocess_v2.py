@@ -24,7 +24,7 @@ if __name__ == "__main__":
         path, speaker, text = line.split("|")
         if speaker not in speakers:
             speakers.append(speaker)
-    assert (len(speakers) != 0), "no speaker found"
+    assert (len(speakers) != 0), "No audio file found. Please check your uploaded file structure."
     # Source 3 (Optional): sampled audios as extra training helpers
     if args.add_auxiliary_data:
         with open("sampled_audio4ft.txt", 'r', encoding='utf-8') as f:
