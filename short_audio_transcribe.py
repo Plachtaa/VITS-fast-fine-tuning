@@ -43,6 +43,10 @@ if __name__ == "__main__":
             'zh': "[ZH]",
             'ja': "[JA]",
         }
+    elif args.languages == "C":
+        lang2token = {
+            'zh': "[ZH]",
+        }
     model = whisper.load_model(args.whisper_size)
     parent_dir = "./custom_character_voice/"
     speaker_names = list(os.walk(parent_dir))[0][1]
@@ -67,6 +71,7 @@ if __name__ == "__main__":
                 lang, text = transcribe_one(save_path)
                 if lang not in list(lang2token.keys()):
                     print(f"{lang} not supported, ignoring\n")
+                    continue
                 text = lang2token[lang] + text + lang2token[lang] + "\n"
                 speaker_annos.append(save_path + "|" + speaker + "|" + text)
             except:
@@ -82,6 +87,9 @@ if __name__ == "__main__":
     #     cleaned_text += "\n" if not cleaned_text.endswith("\n") else ""
     #     speaker_annos[i] = path + "|" + sid + "|" + cleaned_text
     # write into annotation
+    if len(speaker_annos) == 0:
+        print("Warning: no short audios found, this IS expected if you have only uploaded long audios, videos or video links.")
+        print("this IS NOT expected if you have uploaded a zip file of short audios. Please check your file structure or make sure your audio language is supported.")
     with open("short_character_anno.txt", 'w', encoding='utf-8') as f:
         for line in speaker_annos:
             f.write(line)

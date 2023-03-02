@@ -6,7 +6,7 @@ import argparse
 import commons
 from mel_processing import spectrogram_torch
 import utils
-from models_infer import SynthesizerTrn
+from models import SynthesizerTrn
 import gradio as gr
 import librosa
 import webbrowser

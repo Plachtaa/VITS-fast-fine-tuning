@@ -24,7 +24,7 @@ if __name__ == "__main__":
         path, speaker, text = line.split("|")
         if speaker not in speakers:
             speakers.append(speaker)
-    assert (len(speakers) != 0), "no speaker found"
+    assert (len(speakers) != 0), "No audio file found. Please check your uploaded file structure."
     # Source 3 (Optional): sampled audios as extra training helpers
     if args.add_auxiliary_data:
         with open("sampled_audio4ft.txt", 'r', encoding='utf-8') as f:
@@ -111,7 +111,7 @@ if __name__ == "__main__":
             path, speaker, txt = line.split("|")
             if len(txt) > 150:
                 continue
-            cleaned_text = text._clean_text(txt, hps['data']['text_cleaners'])
+            cleaned_text = text._clean_text(txt, hps['data']['text_cleaners']).replace("[ZH]", "")
             cleaned_text += "\n" if not cleaned_text.endswith("\n") else ""
             cleaned_new_annos.append(path + "|" + str(speaker2id[speaker]) + "|" + cleaned_text)
 

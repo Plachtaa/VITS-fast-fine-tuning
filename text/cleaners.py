@@ -29,13 +29,19 @@ def korean_cleaners(text):
     return text
 
 
+# def chinese_cleaners(text):
+#     '''Pipeline for Chinese text'''
+#     text = number_to_chinese(text)
+#     text = chinese_to_bopomofo(text)
+#     text = latin_to_bopomofo(text)
+#     text = re.sub(r'([ˉˊˇˋ˙])$', r'\1。', text)
+#     return text
+
 def chinese_cleaners(text):
-    '''Pipeline for Chinese text'''
-    text = number_to_chinese(text)
-    text = chinese_to_bopomofo(text)
-    text = latin_to_bopomofo(text)
-    text = re.sub(r'([ˉˊˇˋ˙])$', r'\1。', text)
-    return text
+    from pypinyin import Style, pinyin
+    text = text.replace("[ZH]", "")
+    phones = [phone[0] for phone in pinyin(text, style=Style.TONE3)]
+    return ' '.join(phones)
 
 
 def zh_ja_mixture_cleaners(text):
