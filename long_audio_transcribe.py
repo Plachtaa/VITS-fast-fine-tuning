@@ -58,6 +58,7 @@ if __name__ == "__main__":
             wav_seg_name = f"{character_name}_{code}_{i}.wav"
             savepth = "./segmented_character_voice/" + character_name + "/" + wav_seg_name
             speaker_annos.append(savepth + "|" + character_name + "|" + text)
+            print(f"Transcribed segment: {speaker_annos[-1]}")
             # trimmed_wav_seg = librosa.effects.trim(wav_seg.squeeze().numpy())
             # trimmed_wav_seg = torch.tensor(trimmed_wav_seg[0]).unsqueeze(0)
             torchaudio.save(savepth, wav_seg, 22050, channels_first=True)
