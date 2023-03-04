@@ -27,6 +27,7 @@ if __name__ == "__main__":
         lang2token = {
             'zh': "[ZH]",
         }
+    assert(torch.cuda.is_available()), "Please enable GPU in order to run Whisper!"
     model = whisper.load_model(args.whisper_size)
     speaker_annos = []
     for file in filelist:
