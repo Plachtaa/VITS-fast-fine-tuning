@@ -23,5 +23,5 @@ def clip_file(file):
 
 if __name__ == "__main__":
     infos = generate_infos()
-    with ThreadPoolExecutor(max_workers=os.cpu_count() - 2) as executor:
+    with ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
         executor.map(clip_file, infos)
