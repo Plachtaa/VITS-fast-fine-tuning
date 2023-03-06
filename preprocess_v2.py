@@ -4,8 +4,14 @@ import json
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--add_auxiliary_data", type=bool, help="Whether to add extra data as fine-tuning helper")
+    parser.add_argument("--languages", default="CJE")
     args = parser.parse_args()
-
+    if args.languages == "CJE":
+        langs = ["[ZH]", "[JA]", "[EN]"]
+    elif args.languages == "CJ":
+        langs = ["[ZH]", "[JA]"]
+    elif args.languages == "C":
+        langs = ["[ZH]"]
     new_annos = []
     # Source 1: transcribed short audios
     if os.path.exists("short_character_anno.txt"):
@@ -29,6 +35,17 @@ if __name__ == "__main__":
     if args.add_auxiliary_data:
         with open("sampled_audio4ft.txt", 'r', encoding='utf-8') as f:
             old_annos = f.readlines()
+        # filter old_annos according to supported languages
+        filtered_old_annos = []
+        for line in old_annos:
+            for lang in langs:
+                if lang in line:
+                    filtered_old_annos.append(line)
+        old_annos = filtered_old_annos
+        for line in old_annos:
+            path, speaker, text = line.split("|")
+            if speaker not in speakers:
+                speakers.append(speaker)
         num_old_voices = len(old_annos)
         num_new_voices = len(new_annos)
         # STEP 1: balance number of new & old voices
@@ -44,12 +61,11 @@ if __name__ == "__main__":
         # assign ids to new speakers
         speaker2id = {}
         for i, speaker in enumerate(speakers):
-            speaker2id[speaker] = hps['data']["n_speakers"] + i
+            speaker2id[speaker] = i
         # modify n_speakers
-        hps['data']["n_speakers"] = hps['data']["n_speakers"] + len(speakers)
-        # add speaker names
-        for speaker in speakers:
-            hps['speakers'][speaker] = speaker2id[speaker]
+        hps['data']["n_speakers"] = len(speakers)
+        # overwrite speaker names
+        hps['speakers'] = speaker2id
         hps['train']['log_interval'] = 100
         hps['train']['eval_interval'] = 1000
         hps['train']['batch_size'] = 16
@@ -69,8 +85,16 @@ if __name__ == "__main__":
             cleaned_text = text._clean_text(txt, hps['data']['text_cleaners'])
             cleaned_text += "\n" if not cleaned_text.endswith("\n") else ""
             cleaned_new_annos.append(path + "|" + str(speaker2id[speaker]) + "|" + cleaned_text)
+        cleaned_old_annos = []
+        for i, line in enumerate(old_annos):
+            path, speaker, txt = line.split("|")
+            if len(txt) > 150:
+                continue
+            cleaned_text = text._clean_text(txt, hps['data']['text_cleaners'])
+            cleaned_text += "\n" if not cleaned_text.endswith("\n") else ""
+            cleaned_old_annos.append(path + "|" + str(speaker2id[speaker]) + "|" + cleaned_text)
         # merge with old annotation
-        final_annos = old_annos + cc_duplicate * cleaned_new_annos
+        final_annos = cleaned_old_annos + cc_duplicate * cleaned_new_annos
         # save annotation file
         with open("final_annotation_train.txt", 'w', encoding='utf-8') as f:
             for line in final_annos:
