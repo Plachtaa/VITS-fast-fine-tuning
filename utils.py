@@ -38,7 +38,7 @@ def tag_cjke(text):
     prev_lang=None
     tagged_text = ""
     for s in sentences:
-        nu = re.sub(r'[\s\p{P}]+', '', s, flags=re.U).strip()
+        nu = re.sub(r'[\s\p{P}]+', '', s, flags=re.U).strip()   #全为字符跳过
         if len(nu)==0:
             continue
         s = re.sub(r'[()（）《》「」【】‘“”’]+', '', s)
