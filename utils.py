@@ -25,24 +25,22 @@ num_pattern=re.compile(r'[0-9]')
 comma=r"(?<=[.。!！?？；;，,、:：'\"‘“”’()（）《》「」~——])"    #向前匹配但固定长度
 tags={'ZH':'[ZH]','EN':'[EN]','JP':'[JA]','KR':'[KR]'}
 
-def restart_program():
-    python = sys.executable
-    os.execl(python, python, * sys.argv)
-
 def tag_cjke(text):
     '''为中英日韩加tag,中日正则分不开，故先分句分离中日再识别，以应对大部分情况'''
-    sentences = re.split(r"([.。!！?？；;，,、:：'\"‘“”’()（）【】《》「」~——]+ *(?![0-9]))", text) #分句排除小数点
+    sentences = re.split(r"([.。!！?？；;，,、:：'\"‘“”’()（）【】《》「」~——]+ *(?![0-9]))", text) #分句，排除小数点
     sentences.append("")
     sentences = ["".join(i) for i in zip(sentences[0::2],sentences[1::2])]
     # print(sentences)
     prev_lang=None
     tagged_text = ""
     for s in sentences:
-        nu = re.sub(r'[\s\p{P}]+', '', s, flags=re.U).strip()   #全为字符跳过
+        #全为符号跳过
+        nu = re.sub(r'[\s\p{P}]+', '', s, flags=re.U).strip()   
         if len(nu)==0:
             continue
         s = re.sub(r'[()（）《》「」【】‘“”’]+', '', s)
         jp=re.findall(jp_pattern, s)
+        #本句含日语字符判断为日语
         if len(jp)>0:  
             prev_lang,tagged_jke=tag_jke(s,prev_lang)
             tagged_text +=tagged_jke
