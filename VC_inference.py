@@ -121,7 +121,7 @@ if __name__ == "__main__":
                               outputs=[text_output, audio_output])
         with gr.Tab("Voice Conversion"):
             gr.Markdown("""
-                            录制或上传声音，并选择要转换的音色。User代表的音色是你自己。
+                            录制或上传声音，并选择要转换的音色。
             """)
             with gr.Column():
                 record_audio = gr.Audio(label="record your voice", source="microphone")
