@@ -127,7 +127,7 @@ if __name__ == "__main__":
                 record_audio = gr.Audio(label="record your voice", source="microphone")
                 upload_audio = gr.Audio(label="or upload audio here", source="upload")
                 source_speaker = gr.Dropdown(choices=speakers, value=speakers[0], label="source speaker")
-                target_speaker = gr.Dropdown(choices=speakers, value=speakers[1], label="target speaker")
+                target_speaker = gr.Dropdown(choices=speakers, value=speakers[0], label="target speaker")
             with gr.Column():
                 message_box = gr.Textbox(label="Message")
                 converted_audio = gr.Audio(label='converted audio')
