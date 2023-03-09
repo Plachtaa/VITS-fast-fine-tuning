@@ -55,4 +55,8 @@ inference
 ## 在MoeGoe使用
 0. MoeGoe以及类似其它VITS推理UI使用的config格式略有不同，需要下载的文件为模型`G_latest.pth`和配置文件`moegoe_config.json`
 1. 按照[MoeGoe](https://github.com/CjangCjengh/MoeGoe)页面的提示配置路径即可使用。
+2. MoeGoe在输入句子时需要使用相应的语言标记包裹句子才能正常合成。（日语用[JA], 中文用[ZH], 英文用[EN]），例如：  
+[JA]こんにちわ。[JA]  
+[ZH]你好！[ZH]  
+[EN]Hello![EN]  
 
