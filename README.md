@@ -20,11 +20,8 @@ Chinese & Japanese：[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F
 - [x] Clone character voice from BILIBILI video links (one video should contain single speaker only)
 
 ### Currently Supported Characters for TTS & VC:
-- [x] Umamusume Pretty Derby (Used as base model pretraining)
-- [x] Sanoba Witch (Used as base model pretraining)
-- [x] Genshin Impact (Used as base model pretraining)
 - [x] Any character you wish as long as you have their voices!
-
+(Note that voice conversion can only be conducted between any two speakers in the model)
 
 
 
