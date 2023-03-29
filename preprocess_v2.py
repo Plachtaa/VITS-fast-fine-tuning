@@ -27,7 +27,8 @@ if __name__ == "__main__":
     # Get all speaker names
     speakers = []
     for line in new_annos:
-        path, speaker, text = line.split("|")
+        speaker = 'Suwanya'
+        path, text = line.split("|")
         if speaker not in speakers:
             speakers.append(speaker)
     assert (len(speakers) != 0), "No audio file found. Please check your uploaded file structure."
@@ -79,7 +80,8 @@ if __name__ == "__main__":
         import text
         cleaned_new_annos = []
         for i, line in enumerate(new_annos):
-            path, speaker, txt = line.split("|")
+            speaker = 'Suwanya'
+            path, txt = line.split("|")
             if len(txt) > 150:
                 continue
             cleaned_text = text._clean_text(txt, hps['data']['text_cleaners'])

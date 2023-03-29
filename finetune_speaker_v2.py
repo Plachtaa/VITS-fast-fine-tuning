@@ -60,7 +60,7 @@ def run(rank, n_gpus, hps):
   symbols = hps['symbols']
   if rank == 0:
     logger = utils.get_logger(hps.model_dir)
-    logger.info(hps)
+    # logger.info(hps)
     utils.check_git_hash(hps.model_dir)
     writer = SummaryWriter(log_dir=hps.model_dir)
     writer_eval = SummaryWriter(log_dir=os.path.join(hps.model_dir, "eval"))
