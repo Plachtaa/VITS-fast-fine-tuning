@@ -3,9 +3,9 @@ librosa==0.9.1
 numpy
 scipy
 tensorboard
-torch
-torchvision
-torchaudio
+torch==1.13.1
+torchvision==0.14.1
+torchaudio==0.13.1
 unidecode
 pyopenjtalk
 jamo
