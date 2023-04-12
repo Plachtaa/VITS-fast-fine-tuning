@@ -34,7 +34,7 @@ if __name__ == "__main__":
         print(f"transcribing {parent_dir + file}...\n")
         options = dict(beam_size=5, best_of=5)
         transcribe_options = dict(task="transcribe", **options)
-        result = model.transcribe(parent_dir + file, **transcribe_options)
+        result = model.transcribe(parent_dir + file, word_timestamps=True, **transcribe_options)
         segments = result["segments"]
         # result = model.transcribe(parent_dir + file)
         lang = result['language']
