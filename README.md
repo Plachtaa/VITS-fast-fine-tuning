@@ -53,3 +53,6 @@ inference
 ## Use in MoeGoe
 0. Prepare downloaded model & config file, which are named `G_latest.pth` and `moegoe_config.json`, respectively.
 1. Follow [MoeGoe](https://github.com/CjangCjengh/MoeGoe) page instructions to install, configure path, and use.
+
+## Looking for help?
+If you have any questions, please feel free to open an [issue](https://github.com/Plachtaa/VITS-fast-fine-tuning/issues/new) or join our [Discord](https://discord.gg/TcrjDFvm5A) server.
