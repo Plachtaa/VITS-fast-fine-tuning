@@ -58,3 +58,5 @@ inference
 [ZH]你好！[ZH]  
 [EN]Hello![EN]  
 
+## 帮助
+如果你在使用过程中遇到了任何问题，可以在[这里](https://github.com/Plachtaa/VITS-fast-fine-tuning/issues/new)开一个issue，或者加入Discord服务器寻求帮助：[Discord](https://discord.gg/TcrjDFvm5A)。
