@@ -1,6 +1,7 @@
 from moviepy.editor import AudioFileClip
 import whisper
 import os
+import json
 import torchaudio
 import librosa
 import torch
@@ -28,6 +29,9 @@ if __name__ == "__main__":
             'zh': "[ZH]",
         }
     assert(torch.cuda.is_available()), "Please enable GPU in order to run Whisper!"
+    with open("./configs/finetune_speaker.json", 'r', encoding='utf-8') as f:
+        hps = json.load(f)
+    target_sr = hps['data']['sampling_rate']
     model = whisper.load_model(args.whisper_size)
     speaker_annos = []
     for file in filelist:
@@ -62,7 +66,7 @@ if __name__ == "__main__":
             print(f"Transcribed segment: {speaker_annos[-1]}")
             # trimmed_wav_seg = librosa.effects.trim(wav_seg.squeeze().numpy())
             # trimmed_wav_seg = torch.tensor(trimmed_wav_seg[0]).unsqueeze(0)
-            torchaudio.save(savepth, wav_seg, 22050, channels_first=True)
+            torchaudio.save(savepth, wav_seg, target_sr, channels_first=True)
     if len(speaker_annos) == 0:
         print("Warning: no long audios & videos found, this IS expected if you have only uploaded short audios")
         print("this IS NOT expected if you have uploaded any long audios, videos or video links. Please check your file structure or make sure your audio/video language is supported.")
