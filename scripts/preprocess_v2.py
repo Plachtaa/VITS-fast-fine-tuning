@@ -19,8 +19,8 @@ if __name__ == "__main__":
             short_character_anno = f.readlines()
             new_annos += short_character_anno
     # Source 2: transcribed long audio segments
-    if os.path.exists("../long_character_anno.txt"):
-        with open("../long_character_anno.txt", 'r', encoding='utf-8') as f:
+    if os.path.exists("./long_character_anno.txt"):
+        with open("./long_character_anno.txt", 'r', encoding='utf-8') as f:
             long_character_anno = f.readlines()
             new_annos += long_character_anno
 
@@ -33,7 +33,7 @@ if __name__ == "__main__":
     assert (len(speakers) != 0), "No audio file found. Please check your uploaded file structure."
     # Source 3 (Optional): sampled audios as extra training helpers
     if args.add_auxiliary_data:
-        with open("../sampled_audio4ft.txt", 'r', encoding='utf-8') as f:
+        with open("./sampled_audio4ft.txt", 'r', encoding='utf-8') as f:
             old_annos = f.readlines()
         # filter old_annos according to supported languages
         filtered_old_annos = []
@@ -55,7 +55,7 @@ if __name__ == "__main__":
 
 
         # STEP 2: modify config file
-        with open("../configs/finetune_speaker.json", 'r', encoding='utf-8') as f:
+        with open("./configs/finetune_speaker.json", 'r', encoding='utf-8') as f:
             hps = json.load(f)
 
         # assign ids to new speakers
@@ -72,7 +72,7 @@ if __name__ == "__main__":
         hps['data']['training_files'] = "final_annotation_train.txt"
         hps['data']['validation_files'] = "final_annotation_val.txt"
         # save modified config
-        with open("../configs/modified_finetune_speaker.json", 'w', encoding='utf-8') as f:
+        with open("./configs/modified_finetune_speaker.json", 'w', encoding='utf-8') as f:
             json.dump(hps, f, indent=2)
 
         # STEP 3: clean annotations, replace speaker names with assigned speaker IDs
@@ -96,18 +96,18 @@ if __name__ == "__main__":
         # merge with old annotation
         final_annos = cleaned_old_annos + cc_duplicate * cleaned_new_annos
         # save annotation file
-        with open("../final_annotation_train.txt", 'w', encoding='utf-8') as f:
+        with open("./final_annotation_train.txt", 'w', encoding='utf-8') as f:
             for line in final_annos:
                 f.write(line)
         # save annotation file for validation
-        with open("../final_annotation_val.txt", 'w', encoding='utf-8') as f:
+        with open("./final_annotation_val.txt", 'w', encoding='utf-8') as f:
             for line in cleaned_new_annos:
                 f.write(line)
         print("finished")
     else:
         # Do not add extra helper data
         # STEP 1: modify config file
-        with open("../configs/finetune_speaker.json", 'r', encoding='utf-8') as f:
+        with open("./configs/finetune_speaker.json", 'r', encoding='utf-8') as f:
             hps = json.load(f)
 
         # assign ids to new speakers
@@ -124,7 +124,7 @@ if __name__ == "__main__":
         hps['data']['training_files'] = "final_annotation_train.txt"
         hps['data']['validation_files'] = "final_annotation_val.txt"
         # save modified config
-        with open("../configs/modified_finetune_speaker.json", 'w', encoding='utf-8') as f:
+        with open("./configs/modified_finetune_speaker.json", 'w', encoding='utf-8') as f:
             json.dump(hps, f, indent=2)
 
         # STEP 2: clean annotations, replace speaker names with assigned speaker IDs
@@ -141,11 +141,11 @@ if __name__ == "__main__":
 
         final_annos = cleaned_new_annos
         # save annotation file
-        with open("../final_annotation_train.txt", 'w', encoding='utf-8') as f:
+        with open("./final_annotation_train.txt", 'w', encoding='utf-8') as f:
             for line in final_annos:
                 f.write(line)
         # save annotation file for validation
-        with open("../final_annotation_val.txt", 'w', encoding='utf-8') as f:
+        with open("./final_annotation_val.txt", 'w', encoding='utf-8') as f:
             for line in cleaned_new_annos:
                 f.write(line)
         print("finished")

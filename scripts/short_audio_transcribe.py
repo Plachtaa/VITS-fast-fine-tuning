@@ -56,7 +56,7 @@ if __name__ == "__main__":
     speaker_annos = []
     # resample audios
     # 2023/4/21: Get the target sampling rate
-    with open("../configs/finetune_speaker.json", 'r', encoding='utf-8') as f:
+    with open("./configs/finetune_speaker.json", 'r', encoding='utf-8') as f:
         hps = json.load(f)
     target_sr = hps['data']['sampling_rate']
     for speaker in speaker_names:
