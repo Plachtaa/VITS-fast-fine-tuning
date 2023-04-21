@@ -1,5 +1,6 @@
 import whisper
 import os
+import json
 import torchaudio
 import argparse
 import torch
@@ -54,6 +55,10 @@ if __name__ == "__main__":
     speaker_names = list(os.walk(parent_dir))[0][1]
     speaker_annos = []
     # resample audios
+    # 2023/4/21: Get the target sampling rate
+    with open("./configs/finetune_speaker.json", 'r', encoding='utf-8') as f:
+        hps = json.load(f)
+    target_sr = hps['data']['sampling_rate']
     for speaker in speaker_names:
         for i, wavfile in enumerate(list(os.walk(parent_dir + speaker))[0][2]):
             # try to load file as audio
@@ -63,12 +68,12 @@ if __name__ == "__main__":
                 wav, sr = torchaudio.load(parent_dir + speaker + "/" + wavfile, frame_offset=0, num_frames=-1, normalize=True,
                                           channels_first=True)
                 wav = wav.mean(dim=0).unsqueeze(0)
-                if sr != 22050:
-                    wav = torchaudio.transforms.Resample(orig_freq=sr, new_freq=22050)(wav)
+                if sr != target_sr:
+                    wav = torchaudio.transforms.Resample(orig_freq=sr, new_freq=target_sr)(wav)
                 if wav.shape[1] / sr > 20:
                     print(f"{wavfile} too long, ignoring\n")
                 save_path = parent_dir + speaker + "/" + f"processed_{i}.wav"
-                torchaudio.save(save_path, wav, 22050, channels_first=True)
+                torchaudio.save(save_path, wav, target_sr, channels_first=True)
                 # transcribe text
                 lang, text = transcribe_one(save_path)
                 if lang not in list(lang2token.keys()):
