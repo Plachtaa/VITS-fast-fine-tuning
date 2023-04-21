@@ -3,8 +3,8 @@ from concurrent.futures import ThreadPoolExecutor
 
 from moviepy.editor import AudioFileClip
 
-video_dir = "./video_data/"
-audio_dir = "./raw_audio/"
+video_dir = "../video_data/"
+audio_dir = "../raw_audio/"
 filelist = list(os.walk(video_dir))[0][2]
 
 

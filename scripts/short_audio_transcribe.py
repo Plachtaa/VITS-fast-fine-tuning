@@ -51,12 +51,12 @@ if __name__ == "__main__":
         }
     assert (torch.cuda.is_available()), "Please enable GPU in order to run Whisper!"
     model = whisper.load_model(args.whisper_size)
-    parent_dir = "./custom_character_voice/"
+    parent_dir = "../custom_character_voice/"
     speaker_names = list(os.walk(parent_dir))[0][1]
     speaker_annos = []
     # resample audios
     # 2023/4/21: Get the target sampling rate
-    with open("./configs/finetune_speaker.json", 'r', encoding='utf-8') as f:
+    with open("../configs/finetune_speaker.json", 'r', encoding='utf-8') as f:
         hps = json.load(f)
     target_sr = hps['data']['sampling_rate']
     for speaker in speaker_names:
