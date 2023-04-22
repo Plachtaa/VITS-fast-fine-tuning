@@ -51,7 +51,7 @@ if __name__ == "__main__":
         }
     assert (torch.cuda.is_available()), "Please enable GPU in order to run Whisper!"
     model = whisper.load_model(args.whisper_size)
-    parent_dir = "../custom_character_voice/"
+    parent_dir = "./custom_character_voice/"
     speaker_names = list(os.walk(parent_dir))[0][1]
     speaker_annos = []
     # resample audios
