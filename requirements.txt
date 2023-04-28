@@ -1,6 +1,6 @@
 Cython
 librosa==0.9.2
-numpy
+numpy==1.21.6
 scipy
 tensorboard
 torch==1.13.1
