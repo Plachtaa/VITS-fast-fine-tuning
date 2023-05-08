@@ -54,11 +54,13 @@ if __name__ == "__main__":
     parent_dir = "./custom_character_voice/"
     speaker_names = list(os.walk(parent_dir))[0][1]
     speaker_annos = []
+    total_files = sum([len(files) for r, d, files in os.walk(parent_dir)])
     # resample audios
     # 2023/4/21: Get the target sampling rate
     with open("./configs/finetune_speaker.json", 'r', encoding='utf-8') as f:
         hps = json.load(f)
     target_sr = hps['data']['sampling_rate']
+    processed_files = 0
     for speaker in speaker_names:
         for i, wavfile in enumerate(list(os.walk(parent_dir + speaker))[0][2]):
             # try to load file as audio
@@ -81,6 +83,9 @@ if __name__ == "__main__":
                     continue
                 text = lang2token[lang] + text + lang2token[lang] + "\n"
                 speaker_annos.append(save_path + "|" + speaker + "|" + text)
+                
+                processed_files += 1
+                print(f"Processed: {processed_files}/{total_files}")
             except:
                 continue
 
