@@ -23,7 +23,7 @@ def transcribe_one(audio_path):
     print(f"Detected language: {max(probs, key=probs.get)}")
     lang = max(probs, key=probs.get)
     # decode the audio
-    options = whisper.DecodingOptions()
+    options = whisper.DecodingOptions(beam_size=5, best_of=5)
     result = whisper.decode(model, mel, options)
 
     # print the recognized text
