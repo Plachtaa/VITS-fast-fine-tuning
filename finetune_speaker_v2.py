@@ -98,19 +98,22 @@ def run(rank, n_gpus, hps):
   net_d = MultiPeriodDiscriminator(hps.model.use_spectral_norm).cuda(rank)
 
   # load existing model
-  G_ckpt = "./pretrained_models/G_latest.pth" if hps.cont else "./pretrained_models/G_0.pth"
-  D_ckpt = "./pretrained_models/D_latest.pth" if hps.cont else "./pretrained_models/D_0.pth"
-  try:
-      _, _, _, _ = utils.load_checkpoint(G_ckpt, net_g, None,
-                                         drop_speaker_emb=hps.drop_speaker_embed)
-  except Exception:
-      _, _, _, _ = utils.load_checkpoint("./pretrained_models/G_0.pth", net_g, None, drop_speaker_emb=hps.drop_speaker_embed)
-  try:
-      _, _, _, _ = utils.load_checkpoint(D_ckpt, net_d, None)
-  except Exception:
-      _, _, _, _ = utils.load_checkpoint("./pretrained_models/D_0.pth", net_d, None)
-  epoch_str = 1
-  global_step = 0
+  if hps.cont:
+      try:
+          _, _, _, epoch_str = utils.load_checkpoint(utils.latest_checkpoint_path(hps.model_dir, "G_*.pth"), net_g, None)
+          _, _, _, epoch_str = utils.load_checkpoint(utils.latest_checkpoint_path(hps.model_dir, "D_*.pth"), net_d, None)
+          epoch_str = 1
+          global_step = 0
+      except:
+          _, _, _, epoch_str = utils.load_checkpoint("./pretrained_models/G_0.pth", net_g, None)
+          _, _, _, epoch_str = utils.load_checkpoint("./pretrained_models/D_0.pth", net_d, None)
+          epoch_str = 1
+          global_step = 0
+  else:
+      _, _, _, epoch_str = utils.load_checkpoint("./pretrained_models/G_0.pth", net_g, None)
+      _, _, _, epoch_str = utils.load_checkpoint("./pretrained_models/D_0.pth", net_d, None)
+      epoch_str = 1
+      global_step = 0
   # freeze all other layers except speaker embedding
   for p in net_g.parameters():
       p.requires_grad = True
