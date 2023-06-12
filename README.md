@@ -26,8 +26,9 @@ Chinese & Japanese：[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F
 
 
 ## Fine-tuning
-It's recommended to perform fine-tuning on [Google Colab](https://colab.research.google.com/drive/1pn1xnFfdLK63gVXDwV4zCXfVeo8c-I-0?usp=sharing)
-because the original VITS has some dependencies that are difficult to configure.
+See [LOCAL.md](https://github.com/Plachtaa/VITS-fast-fine-tuning/blob/main/LOCAL.md) for local training guide.  
+Alternatively, you can perform fine-tuning on [Google Colab](https://colab.research.google.com/drive/1pn1xnFfdLK63gVXDwV4zCXfVeo8c-I-0?usp=sharing)
+
 
 ### How long does it take? 
 1. Install dependencies (3 min)

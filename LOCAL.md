@@ -1,6 +1,6 @@
 # Train locally
 ### Build environment
-0. Make sure you have Python>=3.6, <=3.8; 
+0. Make sure you have installed `Python>=3.6, <=3.8`, CMake & C/C++ compilers; 
 1. Clone this repository;
 2. Run `pip install -r requirements`;
 3. Install GPU version PyTorch: (Make sure you have CUDA 11.6 or 11.7 installed)
@@ -99,3 +99,7 @@
    To view training progress, open a new terminal and `cd` to the project root directory, run `tensorboard --logdir="./OUTPUT_MODEL"`, then visit `localhost:6006` with your web browser.
 12. After training is completed, you can use your model by running:  
    `python VC_inference.py --model_dir ./OUTPUT_MODEL/G_latest.pth --share True`
+13. To clear all audio data, run:  
+   ```
+   rm -rf ./custom_character_voice/* ./video_data/* ./raw_audio/* ./denoised_audio/* ./segmented_character_voice/* long_character_anno.txt short_character_anno.txt
+   ```
