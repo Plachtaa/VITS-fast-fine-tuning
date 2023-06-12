@@ -286,6 +286,7 @@ def get_hparams(init=True):
                         help='Model name')
     parser.add_argument('-n', '--max_epochs', type=int, default=50,
                         help='finetune epochs')
+    parser.add_argument('--cont', type=bool, default=False, help='whether to continue training on the latest checkpoint')
     parser.add_argument('--drop_speaker_embed', type=bool, default=False, help='whether to drop existing characters')
 
     args = parser.parse_args()

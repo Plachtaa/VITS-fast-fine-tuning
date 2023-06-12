@@ -96,6 +96,7 @@
 11. Start Training.  
    Run `python finetune_speaker_v2.py -m "./OUTPUT_MODEL" --max_epochs "{Maximum_epochs}" --drop_speaker_embed True`  
    Do replace `{Maximum_epochs}` with your desired number of epochs. Empirically, 100 or more is recommended.  
+   To continue training on previous checkpoint, change the training command to: `python finetune_speaker_v2.py -m "./OUTPUT_MODEL" --max_epochs "{Maximum_epochs}" --drop_speaker_embed True --cont True`. Before you do this, make sure you have previous `G_latest.pth` and `D_latest.pth` under `./OUTPUT_MODEL/` directory.  
    To view training progress, open a new terminal and `cd` to the project root directory, run `tensorboard --logdir="./OUTPUT_MODEL"`, then visit `localhost:6006` with your web browser.
 12. After training is completed, you can use your model by running:  
    `python VC_inference.py --model_dir ./OUTPUT_MODEL/G_latest.pth --share True`
