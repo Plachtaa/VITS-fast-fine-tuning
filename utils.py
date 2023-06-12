@@ -310,6 +310,7 @@ def get_hparams(init=True):
     hparams = HParams(**config)
     hparams.model_dir = model_dir
     hparams.max_epochs = args.max_epochs
+    hparams.cont = args.cont
     hparams.drop_speaker_embed = args.drop_speaker_embed
     return hparams
 
