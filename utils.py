@@ -293,6 +293,17 @@ def load_filepaths_and_text(filename, split="|"):
     return filepaths_and_text
 
 
+def str2bool(v):
+    if isinstance(v, bool):
+        return v
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
+
+
 def get_hparams(init=True):
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--config', type=str, default="./configs/modified_finetune_speaker.json",
@@ -301,9 +312,9 @@ def get_hparams(init=True):
                         help='Model name')
     parser.add_argument('-n', '--max_epochs', type=int, default=50,
                         help='finetune epochs')
-    parser.add_argument('--cont', type=bool, default=False, help='whether to continue training on the latest checkpoint')
-    parser.add_argument('--drop_speaker_embed', type=bool, default=False, help='whether to drop existing characters')
-    parser.add_argument('--train_with_pretrained_model', type=bool, default=True,
+    parser.add_argument('--cont', type=str2bool, default=False, help='whether to continue training on the latest checkpoint')
+    parser.add_argument('--drop_speaker_embed', type=str2bool, default=False, help='whether to drop existing characters')
+    parser.add_argument('--train_with_pretrained_model', type=str2bool, default=True,
                         help='whether to train with pretrained model')
     parser.add_argument('--preserved', type=int, default=4,
                         help='Number of preserved models')
