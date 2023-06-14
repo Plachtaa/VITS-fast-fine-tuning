@@ -100,18 +100,26 @@ def run(rank, n_gpus, hps):
   # load existing model
   if hps.cont:
       try:
-          _, _, _, epoch_str = utils.load_checkpoint("./OUTPUT_MODEL/G_latest.pth", net_g, None)
-          _, _, _, epoch_str = utils.load_checkpoint("./OUTPUT_MODEL/D_latest.pth", net_d, None)
-          global_step = epoch_str * hps.train.batch_size
+          _, _, _, epoch_str = utils.load_checkpoint(utils.latest_checkpoint_path(hps.model_dir, "G_latest.pth"), net_g, None)
+          _, _, _, epoch_str = utils.load_checkpoint(utils.latest_checkpoint_path(hps.model_dir, "D_latest.pth"), net_d, None)
+          global_step = (epoch_str - 1) * len(train_loader)
       except:
           print("Failed to find latest checkpoint, loading G_0.pth...")
-          _, _, _, epoch_str = utils.load_checkpoint("./pretrained_models/G_0.pth", net_g, None)
-          _, _, _, epoch_str = utils.load_checkpoint("./pretrained_models/D_0.pth", net_d, None)
+          if hps.train_with_pretrained_model:
+              print("Train with pretrained model...")
+              _, _, _, epoch_str = utils.load_checkpoint("./pretrained_models/G_0.pth", net_g, None)
+              _, _, _, epoch_str = utils.load_checkpoint("./pretrained_models/D_0.pth", net_d, None)
+          else:
+              print("Train without pretrained model...")
           epoch_str = 1
           global_step = 0
   else:
-      _, _, _, epoch_str = utils.load_checkpoint("./pretrained_models/G_0.pth", net_g, None)
-      _, _, _, epoch_str = utils.load_checkpoint("./pretrained_models/D_0.pth", net_d, None)
+      if hps.train_with_pretrained_model:
+          print("Train with pretrained model...")
+          _, _, _, epoch_str = utils.load_checkpoint("./pretrained_models/G_0.pth", net_g, None)
+          _, _, _, epoch_str = utils.load_checkpoint("./pretrained_models/D_0.pth", net_d, None)
+      else:
+          print("Train without pretrained model...")
       epoch_str = 1
       global_step = 0
   # freeze all other layers except speaker embedding
@@ -252,18 +260,26 @@ def train_and_evaluate(rank, epoch, hps, nets, optims, schedulers, scaler, loade
 
       if global_step % hps.train.eval_interval == 0:
         evaluate(hps, net_g, eval_loader, writer_eval)
-        utils.save_checkpoint(net_g, None, hps.train.learning_rate, epoch, os.path.join(hps.model_dir, "G_{}.pth".format(global_step)))
+        
         utils.save_checkpoint(net_g, None, hps.train.learning_rate, epoch,
                               os.path.join(hps.model_dir, "G_latest.pth".format(global_step)))
-        utils.save_checkpoint(net_d, None, hps.train.learning_rate, epoch, os.path.join(hps.model_dir, "D_{}.pth".format(global_step)))
+        
         utils.save_checkpoint(net_d, None, hps.train.learning_rate, epoch,
                               os.path.join(hps.model_dir, "D_latest.pth".format(global_step)))
-        old_g=os.path.join(hps.model_dir, "G_{}.pth".format(global_step-4000))
-        old_d=os.path.join(hps.model_dir, "D_{}.pth".format(global_step-4000))
-        if os.path.exists(old_g):
-          os.remove(old_g)
-        if os.path.exists(old_d):
-          os.remove(old_d)
+        if hps.preserved > 0:
+          utils.save_checkpoint(net_g, None, hps.train.learning_rate, epoch,
+                                  os.path.join(hps.model_dir, "G_{}.pth".format(global_step)))
+          utils.save_checkpoint(net_d, None, hps.train.learning_rate, epoch,
+                                  os.path.join(hps.model_dir, "D_{}.pth".format(global_step)))
+          old_g = utils.oldest_checkpoint_path(hps.model_dir, "G_[0-9]*.pth",
+                                               preserved=hps.preserved)  # Preserve 4 (default) historical checkpoints.
+          old_d = utils.oldest_checkpoint_path(hps.model_dir, "D_[0-9]*.pth", preserved=hps.preserved)
+          if os.path.exists(old_g):
+            print(f"remove {old_g}")
+            os.remove(old_g)
+          if os.path.exists(old_d):
+            print(f"remove {old_d}")
+            os.remove(old_d)
     global_step += 1
     if epoch > hps.max_epochs:
         print("Maximum epoch reached, closing training...")

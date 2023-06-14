@@ -204,12 +204,27 @@ def summarize(writer, global_step, scalars={}, histograms={}, images={}, audios=
         writer.add_audio(k, v, global_step, audio_sampling_rate)
 
 
-def latest_checkpoint_path(dir_path, regex="G_*.pth"):
+def extract_digits(f):
+    digits = "".join(filter(str.isdigit, f))
+    return int(digits) if digits else -1
+
+
+def latest_checkpoint_path(dir_path, regex="G_[0-9]*.pth"):
     f_list = glob.glob(os.path.join(dir_path, regex))
-    f_list.sort(key=lambda f: int("".join(filter(str.isdigit, f))))
+    f_list.sort(key=lambda f: extract_digits(f))
     x = f_list[-1]
-    print(x)
+    print(f"latest_checkpoint_path:{x}")
     return x
+
+
+def oldest_checkpoint_path(dir_path, regex="G_[0-9]*.pth", preserved=4):
+    f_list = glob.glob(os.path.join(dir_path, regex))
+    f_list.sort(key=lambda f: extract_digits(f))
+    if len(f_list) > preserved:
+        x = f_list[0]
+        print(f"oldest_checkpoint_path:{x}")
+        return x
+    return ""
 
 
 def plot_spectrogram_to_numpy(spectrogram):
@@ -278,6 +293,17 @@ def load_filepaths_and_text(filename, split="|"):
     return filepaths_and_text
 
 
+def str2bool(v):
+    if isinstance(v, bool):
+        return v
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
+
+
 def get_hparams(init=True):
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--config', type=str, default="./configs/modified_finetune_speaker.json",
@@ -286,8 +312,12 @@ def get_hparams(init=True):
                         help='Model name')
     parser.add_argument('-n', '--max_epochs', type=int, default=50,
                         help='finetune epochs')
-    parser.add_argument('--cont', type=bool, default=False, help='whether to continue training on the latest checkpoint')
-    parser.add_argument('--drop_speaker_embed', type=bool, default=False, help='whether to drop existing characters')
+    parser.add_argument('--cont', type=str2bool, default=False, help='whether to continue training on the latest checkpoint')
+    parser.add_argument('--drop_speaker_embed', type=str2bool, default=False, help='whether to drop existing characters')
+    parser.add_argument('--train_with_pretrained_model', type=str2bool, default=True,
+                        help='whether to train with pretrained model')
+    parser.add_argument('--preserved', type=int, default=4,
+                        help='Number of preserved models')
 
     args = parser.parse_args()
     model_dir = os.path.join("./", args.model)
@@ -312,6 +342,8 @@ def get_hparams(init=True):
     hparams.max_epochs = args.max_epochs
     hparams.cont = args.cont
     hparams.drop_speaker_embed = args.drop_speaker_embed
+    hparams.train_with_pretrained_model = args.train_with_pretrained_model
+    hparams.preserved = args.preserved
     return hparams
 
 
