@@ -52,6 +52,7 @@ inference
 └───G_latest.pth
 ```
 4. run `inference.exe`, the browser should pop up automatically.
+5. Note: you must install `ffmpeg` to enable voice conversion feature.
 
 ## Use in MoeGoe
 0. Prepare downloaded model & config file, which are named `G_latest.pth` and `moegoe_config.json`, respectively.
