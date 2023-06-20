@@ -62,6 +62,7 @@
    ```
    ### Windows
    Manually download `G_0.pth`, `D_0.pth`, `finetune_speaker.json` from the URLs in one of the options described above.
+   
    Rename all `G` models to `G_0.pth`, `D` models to `D_0.pth`, config files (`.json`) to `finetune_speaker.json`.  
    Put `G_0.pth`, `D_0.pth` under `pretrained_models` directory;  
    Put `finetune_speaker.json` under `configs` directory  
