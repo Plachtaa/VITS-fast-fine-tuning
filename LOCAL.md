@@ -61,12 +61,13 @@
    wget https://huggingface.co/datasets/Plachta/sampled_audio4ft/resolve/main/VITS-Chinese/config.json -O ./configs/finetune_speaker.json
    ```
    ### Windows
-   Manually download `G_0.pth`, `D_0.pth`, `finetune_speaker.json` from the URLs in one of the options described above.  
+   Manually download `G_0.pth`, `D_0.pth`, `finetune_speaker.json` from the URLs in one of the options described above.
+   Rename all `G` models to `G_0.pth`, `D` models to `D_0.pth`, config files (`.json`) to `finetune_speaker.json`.  
    Put `G_0.pth`, `D_0.pth` under `pretrained_models` directory;  
    Put `finetune_speaker.json` under `configs` directory  
    
    #### Please note that when you download one of them, the previous model will be overwritten.
-8. Put your voice data under corresponding directories, see [DATA.MD](https://github.com/Plachtaa/VITS-fast-fine-tuning/blob/main/DATA_EN.MD) for detailed different uploading options.
+9. Put your voice data under corresponding directories, see [DATA.MD](https://github.com/Plachtaa/VITS-fast-fine-tuning/blob/main/DATA_EN.MD) for detailed different uploading options.
    ### Short audios
    1. Prepare your data according to [DATA.MD](https://github.com/Plachtaa/VITS-fast-fine-tuning/blob/main/DATA_EN.MD) as a single `.zip` file;  
    2. Put your file under directory `./custom_character_voice/`;
@@ -79,7 +80,7 @@
    ### Videos
    1. Name your video files according to [DATA.MD](https://github.com/Plachtaa/VITS-fast-fine-tuning/blob/main/DATA_EN.MD);
    2. Put your renamed video files under directory `./video_data/`
-9. Process all audio data.
+10. Process all audio data.
    ```
    python scripts/video2audio.py
    python scripts/denoise_audio.py
@@ -89,18 +90,18 @@
    ```
    Replace `"{PRETRAINED_MODEL}"` with one of `{CJ, CJE, C}` according to your previous model choice.  
    Make sure you have a minimum GPU memory of 12GB. If not, change the argument `whisper_size` to `medium` or `small`.
-10. Process all text data.  
+11. Process all text data.  
    If you choose to add auxiliary data, run `python preprocess_v2.py --add_auxiliary_data True --languages "{PRETRAINED_MODEL}"`  
    If not, run `python3.8 preprocess_v2.py --languages "{PRETRAINED_MODEL}"`  
    Do replace `"{PRETRAINED_MODEL}"` with one of `{CJ, CJE, C}` according to your previous model choice.
-11. Start Training.  
+12. Start Training.  
    Run `python finetune_speaker_v2.py -m ./OUTPUT_MODEL --max_epochs "{Maximum_epochs}" --drop_speaker_embed True`  
    Do replace `{Maximum_epochs}` with your desired number of epochs. Empirically, 100 or more is recommended.  
    To continue training on previous checkpoint, change the training command to: `python finetune_speaker_v2.py -m ./OUTPUT_MODEL --max_epochs "{Maximum_epochs}" --drop_speaker_embed True --cont True`. Before you do this, make sure you have previous `G_latest.pth` and `D_latest.pth` under `./OUTPUT_MODEL/` directory.  
    To view training progress, open a new terminal and `cd` to the project root directory, run `tensorboard --logdir=./OUTPUT_MODEL`, then visit `localhost:6006` with your web browser.
-12. After training is completed, you can use your model by running:  
+13. After training is completed, you can use your model by running:  
    `python VC_inference.py --model_dir ./OUTPUT_MODEL/G_latest.pth --share True`
-13. To clear all audio data, run:  
+14. To clear all audio data, run:  
    ```
    rm -rf ./custom_character_voice/* ./video_data/* ./raw_audio/* ./denoised_audio/* ./segmented_character_voice/* long_character_anno.txt short_character_anno.txt
    ```
