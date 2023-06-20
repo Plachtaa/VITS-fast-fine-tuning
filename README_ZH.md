@@ -52,6 +52,7 @@ inference
 └───G_latest.pth
 ```
 4. 运行 `inference.exe`, 浏览器会自动弹出窗口, 注意其所在路径不能有中文字符或者空格.
+5. 请注意，声线转换功能需要安装`ffmpeg`才能正常使用.
 
 ## 在MoeGoe使用
 0. MoeGoe以及类似其它VITS推理UI使用的config格式略有不同，需要下载的文件为模型`G_latest.pth`和配置文件`moegoe_config.json`
