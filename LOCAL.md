@@ -1,6 +1,6 @@
 # Train locally
 ### Build environment
-0. Make sure you have installed `Python>=3.6, <=3.8`, CMake & C/C++ compilers; 
+0. Make sure you have installed `Python>=3.6, <=3.8`, CMake & C/C++ compilers, ffmpeg; 
 1. Clone this repository;
 2. Run `pip install -r requirements`;
 3. Install GPU version PyTorch: (Make sure you have CUDA 11.6 or 11.7 installed)
