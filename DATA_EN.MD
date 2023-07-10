@@ -24,6 +24,7 @@ Your-zip-file.zip
 Note that the format of the audio files does not matter as long as they are audio files。  
 Quality requirement: >=2s, <=10s, contain as little background sound as possible.   
 Quantity requirement: at least 10 per character, 20+ per character is recommended.
+
 2. Long audio files named by character names, which should contain single character voice only. Background sound is 
 acceptable since they will be automatically removed. File name format `{CharacterName}_{random_number}.wav`  
 (E.G. `Diana_234135.wav`, `MinatoAqua_234252.wav`), must be `.wav` files.  
