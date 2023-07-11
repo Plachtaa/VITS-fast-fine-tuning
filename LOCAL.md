@@ -106,6 +106,13 @@
 12. After training is completed, you can use your model by running:  
    `python VC_inference.py --model_dir ./OUTPUT_MODEL/G_latest.pth --share True`
 13. To clear all audio data, run:  
+   ### Linux
    ```
    rm -rf ./custom_character_voice/* ./video_data/* ./raw_audio/* ./denoised_audio/* ./segmented_character_voice/* long_character_anno.txt short_character_anno.txt
    ```
+   ### Windos
+   ```
+   del /Q /S .\custom_character_voice\* .\video_data\* .\raw_audio\* .\denoised_audio\* .\segmented_character_voice\* long_character_anno.txt short_character_anno.txt
+   ```
+
+
