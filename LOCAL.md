@@ -91,18 +91,28 @@
    ```
    Replace `"{PRETRAINED_MODEL}"` with one of `{CJ, CJE, C}` according to your previous model choice.  
    Make sure you have a minimum GPU memory of 12GB. If not, change the argument `whisper_size` to `medium` or `small`.
-11. Process all text data.  
+
+10. Process all text data.  
    If you choose to add auxiliary data, run `python preprocess_v2.py --add_auxiliary_data True --languages "{PRETRAINED_MODEL}"`  
-   If not, run `python3.8 preprocess_v2.py --languages "{PRETRAINED_MODEL}"`  
+   If not, run `python preprocess_v2.py --languages "{PRETRAINED_MODEL}"`  
    Do replace `"{PRETRAINED_MODEL}"` with one of `{CJ, CJE, C}` according to your previous model choice.
-12. Start Training.  
+
+11. Start Training.  
    Run `python finetune_speaker_v2.py -m ./OUTPUT_MODEL --max_epochs "{Maximum_epochs}" --drop_speaker_embed True`  
    Do replace `{Maximum_epochs}` with your desired number of epochs. Empirically, 100 or more is recommended.  
    To continue training on previous checkpoint, change the training command to: `python finetune_speaker_v2.py -m ./OUTPUT_MODEL --max_epochs "{Maximum_epochs}" --drop_speaker_embed False --cont True`. Before you do this, make sure you have previous `G_latest.pth` and `D_latest.pth` under `./OUTPUT_MODEL/` directory.  
    To view training progress, open a new terminal and `cd` to the project root directory, run `tensorboard --logdir=./OUTPUT_MODEL`, then visit `localhost:6006` with your web browser.
-13. After training is completed, you can use your model by running:  
+
+12. After training is completed, you can use your model by running:  
    `python VC_inference.py --model_dir ./OUTPUT_MODEL/G_latest.pth --share True`
-14. To clear all audio data, run:  
+13. To clear all audio data, run:  
+   ### Linux
    ```
-   rm -rf ./custom_character_voice/* ./video_data/* ./raw_audio/* ./denoised_audio/* ./segmented_character_voice/* long_character_anno.txt short_character_anno.txt
+   rm -rf ./custom_character_voice/* ./video_data/* ./raw_audio/* ./denoised_audio/* ./segmented_character_voice/* ./separated/* long_character_anno.txt short_character_anno.txt
    ```
+   ### Windos
+   ```
+   del /Q /S .\custom_character_voice\* .\video_data\* .\raw_audio\* .\denoised_audio\* .\segmented_character_voice\* .\separated\* long_character_anno.txt short_character_anno.txt
+   ```
+
+
