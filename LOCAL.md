@@ -94,7 +94,7 @@
 
 10. Process all text data.  
    If you choose to add auxiliary data, run `python preprocess_v2.py --add_auxiliary_data True --languages "{PRETRAINED_MODEL}"`  
-   If not, run `python3.8 preprocess_v2.py --languages "{PRETRAINED_MODEL}"`  
+   If not, run `python preprocess_v2.py --languages "{PRETRAINED_MODEL}"`  
    Do replace `"{PRETRAINED_MODEL}"` with one of `{CJ, CJE, C}` according to your previous model choice.
 
 11. Start Training.  
