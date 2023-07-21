@@ -2,7 +2,7 @@ import os
 import argparse
 import json
 import sys
-sys.setrecursionlimit(500000)  # fix the error message of RecursionError: maximum recursion depth exceeded while calling a Python object
+sys.setrecursionlimit(500000)  # Fix the error message of RecursionError: maximum recursion depth exceeded while calling a Python object.  You can change the number as you want.
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
