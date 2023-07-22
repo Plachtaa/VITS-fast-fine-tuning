@@ -28,7 +28,7 @@ English Documentation Please Click [here](https://github.com/Plachtaa/VITS-fast-
 
 
 ## 微调
-若希望于本地机器进行训练，请参考[LOCAL.md](https://github.com/Plachtaa/VITS-fast-fine-tuning/blob/main/LOCAL.md)以进行。  
+请参考[LOCAL.md](https://github.com/Plachtaa/VITS-fast-fine-tuning/blob/main/LOCAL.md)以进行。  
 Google Colab 笔记本由于Colab虚拟机环境频繁更新导致维护困难，现已弃用，请使用本地部署。
 ### 我需要花多长时间？
 1. 安装依赖
