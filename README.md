@@ -29,12 +29,12 @@ Chinese only：(No running huggingface spaces) Author: [Wwwwhy230825](https://gi
 
 ## Fine-tuning
 See [LOCAL.md](https://github.com/Plachtaa/VITS-fast-fine-tuning/blob/main/LOCAL.md) for local training guide.  
-Google Colab notebook is deprecated, please deploy this project locally.
+Alternatively, you can perform fine-tuning on [Google Colab](https://colab.research.google.com/drive/1pn1xnFfdLK63gVXDwV4zCXfVeo8c-I-0?usp=sharing) (2023/7/18: This is under maintainace, do not use)
 
 
 ### How long does it take? 
-1. Install dependencies
-2. Choose pretrained model to start. 
+1. Install dependencies (3 min)
+2. Choose pretrained model to start. The detailed differences between them are described in [Colab Notebook](https://colab.research.google.com/drive/1pn1xnFfdLK63gVXDwV4zCXfVeo8c-I-0?usp=sharing)
 3. Upload the voice samples of the characters you wish to add，see [DATA.MD](https://github.com/Plachtaa/VITS-fast-fine-tuning/blob/main/DATA_EN.MD) for detailed uploading options.
 4. Start fine-tuning. Time taken varies from 20 minutes ~ 2 hours, depending on the number of voices you uploaded.
 
