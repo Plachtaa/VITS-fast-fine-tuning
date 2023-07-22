@@ -29,11 +29,10 @@ English Documentation Please Click [here](https://github.com/Plachtaa/VITS-fast-
 
 ## 微调
 若希望于本地机器进行训练，请参考[LOCAL.md](https://github.com/Plachtaa/VITS-fast-fine-tuning/blob/main/LOCAL.md)以进行。  
-另外，也可以选择使用 [Google Colab](https://colab.research.google.com/drive/1pn1xnFfdLK63gVXDwV4zCXfVeo8c-I-0?usp=sharing) (2023/7/18: 维护中，无法正常使用）
-进行微调任务。
+Google Colab 笔记本由于Colab虚拟机环境频繁更新导致维护困难，现已弃用，请使用本地部署。
 ### 我需要花多长时间？
-1. 安装依赖 (10 min在Google Colab中)
-2. 选择预训练模型，详细区别参见[Colab 笔记本页面](https://colab.research.google.com/drive/1pn1xnFfdLK63gVXDwV4zCXfVeo8c-I-0?usp=sharing)。
+1. 安装依赖
+2. 选择预训练模型，
 3. 上传你希望加入的其它角色声音，详细上传方式见[DATA.MD](https://github.com/Plachtaa/VITS-fast-fine-tuning/blob/main/DATA.MD)
 4. 进行微调，根据选择的微调方式和样本数量不同，花费时长可能在20分钟到2小时不等。
 
