@@ -29,7 +29,7 @@ Chinese only：(No running huggingface spaces) Author: [Wwwwhy230825](https://gi
 
 ## Fine-tuning
 See [LOCAL.md](https://github.com/Plachtaa/VITS-fast-fine-tuning/blob/main/LOCAL.md) for local training guide.  
-Alternatively, you can perform fine-tuning on [Google Colab](https://colab.research.google.com/drive/1pn1xnFfdLK63gVXDwV4zCXfVeo8c-I-0?usp=sharing) (2023/7/18: This is under maintainace, do not use)
+Google Colab notebook is deprecated, please deploy this project locally.
 
 
 ### How long does it take? 
