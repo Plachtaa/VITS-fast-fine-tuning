@@ -1,6 +1,9 @@
 import os
 import argparse
 import json
+import sys
+sys.setrecursionlimit(500000)  # Fix the error message of RecursionError: maximum recursion depth exceeded while calling a Python object.  You can change the number as you want.
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--add_auxiliary_data", type=bool, help="Whether to add extra data as fine-tuning helper")
