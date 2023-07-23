@@ -29,7 +29,7 @@ English Documentation Please Click [here](https://github.com/Plachtaa/VITS-fast-
 
 ## 微调
 若希望于本地机器进行训练，请参考[LOCAL.md](https://github.com/Plachtaa/VITS-fast-fine-tuning/blob/main/LOCAL.md)以进行。  
-另外，也可以选择使用 [Google Colab](https://colab.research.google.com/drive/1pn1xnFfdLK63gVXDwV4zCXfVeo8c-I-0?usp=sharing) (2023/7/18: 维护中，无法正常使用）
+另外，也可以选择使用 [Google Colab](https://colab.research.google.com/drive/1pn1xnFfdLK63gVXDwV4zCXfVeo8c-I-0?usp=sharing)
 进行微调任务。
 ### 我需要花多长时间？
 1. 安装依赖 (10 min在Google Colab中)
