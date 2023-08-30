@@ -18,7 +18,7 @@ def generate_infos():
 
 def clip_file(file):
     my_audio_clip = AudioFileClip(video_dir + file)
-    my_audio_clip.write_audiofile(audio_dir + file.rstrip(".mp4") + ".wav")
+    my_audio_clip.write_audiofile(audio_dir + file.rstrip("mp4") + "wav")
 
 
 if __name__ == "__main__":
