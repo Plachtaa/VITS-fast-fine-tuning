@@ -36,7 +36,7 @@ def get_text(text, hps, is_symbol):
     return text_norm
 
 def create_tts_fn(model, hps, speaker_ids):
-    def tts_fn(text, speaker, language, speed):
+    def tts_fn(text, speaker, language,noise_scale,noise_scale_w, speed):
         if language is not None:
             text = language_marks[language] + text + language_marks[language]
         speaker_id = speaker_ids[speaker]
@@ -45,7 +45,7 @@ def create_tts_fn(model, hps, speaker_ids):
             x_tst = stn_tst.unsqueeze(0).to(device)
             x_tst_lengths = LongTensor([stn_tst.size(0)]).to(device)
             sid = LongTensor([speaker_id]).to(device)
-            audio = model.infer(x_tst, x_tst_lengths, sid=sid, noise_scale=.667, noise_scale_w=0.8,
+            audio = model.infer(x_tst, x_tst_lengths, sid=sid, noise_scale=noise_scale, noise_scale_w=noise_scale_w,
                                 length_scale=1.0 / speed)[0][0, 0].data.cpu().float().numpy()
         del stn_tst, x_tst, x_tst_lengths, sid
         return "Success", (hps.data.sampling_rate, audio)
@@ -119,12 +119,20 @@ if __name__ == "__main__":
                     language_dropdown = gr.Dropdown(choices=lang, value=lang[0], label='language')
                     duration_slider = gr.Slider(minimum=0.1, maximum=5, value=1, step=0.1,
                                                 label='速度 Speed')
+                    
+                    noise_scale = gr.Slider(
+                        minimum=0.1, maximum=2, value=0.6, step=0.1, label="Noise Scale"
+                    )
+
+                    noise_scale_w = gr.Slider(
+                        minimum=0.1, maximum=2, value=0.8, step=0.1, label="Noise Scale W"
+                    )
                 with gr.Column():
                     text_output = gr.Textbox(label="Message")
                     audio_output = gr.Audio(label="Output Audio", elem_id="tts-audio")
                     btn = gr.Button("Generate!")
                     btn.click(tts_fn,
-                              inputs=[textbox, char_dropdown, language_dropdown, duration_slider,],
+                              inputs=[textbox, char_dropdown, language_dropdown,noise_scale, noise_scale_w,duration_slider,],
                               outputs=[text_output, audio_output])
         with gr.Tab("Voice Conversion"):
             gr.Markdown("""
