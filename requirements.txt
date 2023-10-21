@@ -22,5 +22,5 @@ indic_transliteration==2.3.37
 num_thai==0.0.5
 opencc==1.1.1
 demucs
-openai-whisper
+git+https://github.com/openai/whisper.git 
 gradio
