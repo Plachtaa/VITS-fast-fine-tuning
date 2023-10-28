@@ -395,7 +395,7 @@ def get_logger(model_dir, filename="train.log"):
     formatter = logging.Formatter("%(asctime)s\t%(name)s\t%(levelname)s\t%(message)s")
     if not os.path.exists(model_dir):
         os.makedirs(model_dir)
-    h = logging.FileHandler(os.path.join(model_dir, filename))
+    h = logging.FileHandler(os.path.join(model_dir, filename),encoding="utf-8")
     h.setLevel(logging.DEBUG)
     h.setFormatter(formatter)
     logger.addHandler(h)
