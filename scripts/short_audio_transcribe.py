@@ -16,7 +16,7 @@ def transcribe_one(audio_path):
     audio = whisper.pad_or_trim(audio)
 
     # make log-Mel spectrogram and move to the same device as the model
-    mel = whisper.log_mel_spectrogram(audio, n_mels=128).to(model.device)
+    mel = whisper.log_mel_spectrogram(audio).to(model.device)
 
     # detect the spoken language
     _, probs = model.detect_language(mel)
