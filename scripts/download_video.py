@@ -3,6 +3,7 @@ import random
 import shutil
 from concurrent.futures import ThreadPoolExecutor
 from google.colab import files
+import subprocess
 
 basepath = os.getcwd()
 uploaded = files.upload()  # 上传文件
@@ -26,9 +27,22 @@ def generate_infos():
 
 
 def download_video(info):
+
     link = info["link"]
     filename = info["filename"]
-    os.system(f"youtube-dl -f 0 {link} -o ./video_data/{filename}.mp4 --no-check-certificate")
+    print(f"Starting download for:\nFilename: {filename}\nLink: {link}")
+    
+    try:
+        result = subprocess.run(
+            ["yt-dlp", "-f", "30280", link, "-o", f"./video_data/{filename}.mp4", "--no-check-certificate"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            check=True
+        )
+        print(f"Download completed for {filename}:\n{result.stdout}")
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to download {link}:\n{e.stderr}")
 
 
 if __name__ == "__main__":
