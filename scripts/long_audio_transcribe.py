@@ -35,23 +35,31 @@ if __name__ == "__main__":
     model = whisper.load_model(args.whisper_size)
     speaker_annos = []
     for file in filelist:
-        print(f"transcribing {parent_dir + file}...\n")
+        audio_path = os.path.join(parent_dir, file)
+        print(f"Transcribing {audio_path}...\n")
+
         options = dict(beam_size=5, best_of=5)
         transcribe_options = dict(task="transcribe", **options)
-        result = model.transcribe(parent_dir + file, word_timestamps=True, **transcribe_options)
+
+        result = model.transcribe(audio_path, word_timestamps=True, **transcribe_options)
         segments = result["segments"]
-        # result = model.transcribe(parent_dir + file)
         lang = result['language']
-        if result['language'] not in list(lang2token.keys()):
+        if lang not in lang2token:
             print(f"{lang} not supported, ignoring...\n")
             continue
-        # segment audio based on segment results
+
         character_name = file.rstrip(".wav").split("_")[0]
         code = file.rstrip(".wav").split("_")[1]
-        if not os.path.exists("./segmented_character_voice/" + character_name):
-            os.mkdir("./segmented_character_voice/" + character_name)
-        wav, sr = torchaudio.load(parent_dir + file, frame_offset=0, num_frames=-1, normalize=True,
-                                  channels_first=True)
+        outdir = os.path.join("./segmented_character_voice", character_name)
+        os.makedirs(outdir, exist_ok=True)
+
+        wav, sr = torchaudio.load(
+            audio_path,
+            frame_offset=0,
+            num_frames=-1,
+            normalize=True,
+            channels_first=True
+        )
 
         for i, seg in enumerate(segments):
             start_time = seg['start']
