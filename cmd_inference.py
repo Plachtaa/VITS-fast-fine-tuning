@@ -10,6 +10,17 @@ python cmd_inference.py -m 模型路径 -c 配置文件路径 -o 输出文件路
 -on 输出文件的名称
 
 """
+"""English version of this module, which is used to generate VITS files
+Instructions
+
+python cmd_inference.py -m model_path -c configuration_file_path -o output_file_path -l input_language -t input_text -s synthesize_target_speaker_name
+
+Optional parameters
+-ns degree of emotional change
+-nsw phoneme pronunciation length
+-ls overall speaking speed
+-on name of the output file
+"""
 
 from pathlib import Path
 import utils
@@ -45,6 +56,10 @@ def get_text(text, hps, is_symbol):
 if __name__ == "__main__":
     import argparse
 
+    """
+    English description of some parameters:
+    -s - speaker name, you should use name, not the number
+    """
     parser = argparse.ArgumentParser(description='vits inference')
     #必须参数
     parser.add_argument('-m', '--model_path', type=str, default="logs/44k/G_0.pth", help='模型路径')

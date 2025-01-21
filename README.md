@@ -54,6 +54,43 @@ inference
 4. run `inference.exe`, the browser should pop up automatically.
 5. Note: you must install `ffmpeg` to enable voice conversion feature.
 
+
+## Inference with CLI
+In this example, we will show how to run inference with the default pretrained model. We are now in the main repository directory.
+1. Create the necessary folders and download the necessary files.
+```
+cd monotonic_align/
+mkdir monotonic_align
+python setup.py build_ext --inplace
+cd ..
+mkdir pretrained_models
+# download data for fine-tuning
+wget https://huggingface.co/datasets/Plachta/sampled_audio4ft/resolve/main/sampled_audio4ft_v2.zip
+unzip sampled_audio4ft_v2.zip
+```
+
+For your finetuned model you may need to create additional directories:
+```
+mkdir video_data
+mkdir raw_audio
+mkdir denoised_audio
+mkdir custom_character_voice
+mkdir segmented_character_voice
+```
+2. Download pretrained models. For example, trilingual model:
+```
+wget https://huggingface.co/spaces/Plachta/VITS-Umamusume-voice-synthesizer/resolve/main/pretrained_models/D_trilingual.pth -O ./pretrained_models/D_0.pth
+wget https://huggingface.co/spaces/Plachta/VITS-Umamusume-voice-synthesizer/resolve/main/pretrained_models/G_trilingual.pth -O ./pretrained_models/G_0.pth
+wget https://huggingface.co/spaces/Plachta/VITS-Umamusume-voice-synthesizer/resolve/main/configs/uma_trilingual.json -O ./configs/finetune_speaker.json
+```
+3. Activate your environment and run the following code:
+`python3 cmd_inference.py -m pretrained_models/G_0.pth -c configs/finetune_speaker.json -t 你好，训练员先生，很高兴见到你。 -s "派蒙 Paimon (Genshin Impact)" -l "简体中文"`
+You can choose another language, customize output folder, change text and character, but all these parameters you can see in the file `cmd_inference.py`.
+Below I'll show only how to change the character.
+4. To change the character please open config file (`configs/finetune_speaker.json`). There you can find dictionary `speakers`, where you'll be able to see full list of speakers. Just copy the name of the character you need use it instead of `"派蒙 Paimon (Genshin Impact)"`
+5. If you have success, you can find output `.wav` file in the `output/vits`
+
+
 ## Use in MoeGoe
 0. Prepare downloaded model & config file, which are named `G_latest.pth` and `moegoe_config.json`, respectively.
 1. Follow [MoeGoe](https://github.com/CjangCjengh/MoeGoe) page instructions to install, configure path, and use.
