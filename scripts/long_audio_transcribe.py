@@ -35,38 +35,57 @@ if __name__ == "__main__":
     model = whisper.load_model(args.whisper_size)
     speaker_annos = []
     for file in filelist:
-        print(f"transcribing {parent_dir + file}...\n")
+        audio_path = os.path.join(parent_dir, file)
+        print(f"Transcribing {audio_path}...\n")
+
         options = dict(beam_size=5, best_of=5)
         transcribe_options = dict(task="transcribe", **options)
-        result = model.transcribe(parent_dir + file, word_timestamps=True, **transcribe_options)
+
+        result = model.transcribe(audio_path, word_timestamps=True, **transcribe_options)
         segments = result["segments"]
-        # result = model.transcribe(parent_dir + file)
         lang = result['language']
-        if result['language'] not in list(lang2token.keys()):
+        if lang not in lang2token:
             print(f"{lang} not supported, ignoring...\n")
             continue
-        # segment audio based on segment results
+
         character_name = file.rstrip(".wav").split("_")[0]
         code = file.rstrip(".wav").split("_")[1]
-        if not os.path.exists("./segmented_character_voice/" + character_name):
-            os.mkdir("./segmented_character_voice/" + character_name)
-        wav, sr = torchaudio.load(parent_dir + file, frame_offset=0, num_frames=-1, normalize=True,
-                                  channels_first=True)
+        outdir = os.path.join("./segmented_character_voice", character_name)
+        os.makedirs(outdir, exist_ok=True)
 
-        for i, seg in enumerate(result['segments']):
+        wav, sr = torchaudio.load(
+            audio_path,
+            frame_offset=0,
+            num_frames=-1,
+            normalize=True,
+            channels_first=True
+        )
+
+        for i, seg in enumerate(segments):
             start_time = seg['start']
             end_time = seg['end']
             text = seg['text']
-            text = lang2token[lang] + text.replace("\n", "") + lang2token[lang]
-            text = text + "\n"
-            wav_seg = wav[:, int(start_time*sr):int(end_time*sr)]
+            text_tokened = lang2token[lang] + text.replace("\n", "") + lang2token[lang] + "\n"
+            start_idx = int(start_time * sr)
+            end_idx = int(end_time * sr)
+            num_samples = end_idx - start_idx
+            if num_samples <= 0:
+                print(f"Skipping zero-length segment: start={start_time}, end={end_time}")
+                continue
+            wav_seg = wav[:, start_idx:end_idx]
+            if wav_seg.shape[1] == 0:
+                print(f"Skipping empty segment i={i}, shape={wav_seg.shape}")
+                continue
+            if sr != target_sr:
+                resampler = torchaudio.transforms.Resample(orig_freq=sr, new_freq=target_sr)
+                wav_seg = resampler(wav_seg)
+
             wav_seg_name = f"{character_name}_{code}_{i}.wav"
-            savepth = "./segmented_character_voice/" + character_name + "/" + wav_seg_name
-            speaker_annos.append(savepth + "|" + character_name + "|" + text)
+            savepth = os.path.join(outdir, wav_seg_name)
+            speaker_annos.append(savepth + "|" + character_name + "|" + text_tokened)
             print(f"Transcribed segment: {speaker_annos[-1]}")
-            # trimmed_wav_seg = librosa.effects.trim(wav_seg.squeeze().numpy())
-            # trimmed_wav_seg = torch.tensor(trimmed_wav_seg[0]).unsqueeze(0)
             torchaudio.save(savepth, wav_seg, target_sr, channels_first=True)
+            
     if len(speaker_annos) == 0:
         print("Warning: no long audios & videos found, this IS expected if you have only uploaded short audios")
         print("this IS NOT expected if you have uploaded any long audios, videos or video links. Please check your file structure or make sure your audio/video language is supported.")
